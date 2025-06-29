@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: payout-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/courier_services?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: 8084
+  servlet:
+    context-path: /
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Payout service specific configuration
+payout:
+  schedule:
+    weekly-calculation: 0 0 1 * * MON  # Every Monday at 1 AM
+    daily-processing: 0 0 5 * * ?      # Every day at 5 AM
+  payment:
+    provider: dummy                     # For now using a dummy provider
+    api-key: ${PAYMENT_API_KEY:dummy-api-key}
+    timeout-seconds: 30

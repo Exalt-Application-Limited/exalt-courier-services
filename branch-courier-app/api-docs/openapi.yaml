@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Branch Courier App API
+  description: API documentation for the Branch Courier App service
+  version: 1.0.0
+  contact:
+    name: Exalt Development Team
+    email: dev@exalt.com
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+  - url: https://courier-services.exalt.com/api/branch-courier-app
+    description: Production server
+paths:
+  /actuator/health:
+    get:
+      tags:
+        - Health Check
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: UP
+  # Add your API endpoints here
+components:
+  schemas:
+    # Add your data models here
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []

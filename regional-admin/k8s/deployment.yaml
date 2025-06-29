@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: regional-admin
+  namespace: courier-services
+  labels:
+    app: regional-admin
+    domain: courier-services
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: regional-admin
+  template:
+    metadata:
+      labels:
+        app: regional-admin
+        domain: courier-services
+        tier: frontend
+    spec:
+      containers:
+      - name: regional-admin
+        image: ${DOCKER_REGISTRY}/regional-admin:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: regional-admin-config
+              key: api-url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: regional-admin-config
+  namespace: courier-services
+data:
+  api-url: "http://api-gateway-service.courier-services.svc.cluster.local"
+  app-name: "regional-admin"

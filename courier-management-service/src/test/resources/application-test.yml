@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: management-test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  h2:
+    console:
+      enabled: true
+
+# Disable Eureka client in tests
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+# Disable Config Server in tests
+spring.cloud.config:
+  enabled: false
+  discovery:
+    enabled: false
+
+# Server port for testing
+server:
+  port: 0

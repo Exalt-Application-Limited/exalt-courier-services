@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # React Web Applications
+  corporate-admin:
+    build:
+      context: ./corporate-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8080
+    volumes:
+      - ./corporate-admin:/app
+      - /app/node_modules
+    networks:
+      - courier-frontend
+
+  global-hq-admin:
+    build:
+      context: ./global-hq-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8080
+    volumes:
+      - ./global-hq-admin:/app
+      - /app/node_modules
+    networks:
+      - courier-frontend
+
+  regional-admin:
+    build:
+      context: ./regional-admin
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8080
+    volumes:
+      - ./regional-admin:/app
+      - /app/node_modules
+    networks:
+      - courier-frontend
+
+  # Node.js Backend for Mobile App
+  driver-mobile-backend:
+    build:
+      context: ./driver-mobile-app
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3001"
+    environment:
+      - NODE_ENV=development
+      - API_BASE_URL=http://localhost:8080
+    volumes:
+      - ./driver-mobile-app:/app
+      - /app/node_modules
+    networks:
+      - courier-frontend
+      - courier-backend
+
+networks:
+  courier-frontend:
+    driver: bridge
+  courier-backend:
+    external: true

@@ -1,0 +1,7 @@
+./branch-courier-app/package.json
+./corporate-admin/package.json
+./driver-mobile-app/backend/package.json
+./driver-mobile-app/package.json
+./global-hq-admin/package.json
+./regional-admin/package.json
+./user-mobile-app/package.json

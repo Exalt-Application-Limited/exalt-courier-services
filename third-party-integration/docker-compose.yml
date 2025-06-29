@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  third-party-integration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: third-party-integration_container
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=development
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    env_file:
+      - .env
+    networks:
+      - exalt-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+networks:
+  exalt-network:
+    external: true

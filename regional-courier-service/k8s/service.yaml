@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: regional-courier-service
+  namespace: courier-services
+  labels:
+    app: regional-courier-service
+    domain: courier-services
+spec:
+  selector:
+    app: regional-courier-service
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

@@ -1,0 +1,257 @@
+name: Courier Services Test and Validation
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'courier-**/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'courier-**/**'
+  workflow_dispatch:
+    inputs:
+      specific_service:
+        description: 'Specific service to test (leave empty to test all)'
+        required: false
+        default: ''
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      java_changes: ${{ steps.filter.outputs.java_changes }}
+      node_changes: ${{ steps.filter.outputs.node_changes }}
+      changed_services: ${{ steps.detect-services.outputs.changed_services }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for manually specified service
+        id: check-manual
+        run: |
+          if [ -n "${{ github.event.inputs.specific_service }}" ]; then
+            echo "Manual service specified: ${{ github.event.inputs.specific_service }}"
+            echo "::set-output name=manual_service::${{ github.event.inputs.specific_service }}"
+          else
+            echo "No specific service specified, will detect changes"
+            echo "::set-output name=manual_service::"
+          fi
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            java_changes:
+              - 'courier-*-service/**'
+            node_changes:
+              - 'courier-*/**'
+              - '!courier-*-service/**'
+
+      - name: Detect changed services
+        id: detect-services
+        run: |
+          if [ -n "${{ steps.check-manual.outputs.manual_service }}" ]; then
+            echo "::set-output name=changed_services::${{ steps.check-manual.outputs.manual_service }}"
+          else
+            # Detect changed services by looking at modified directories
+            CHANGED_JAVA_SERVICES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -o 'courier-[^/]*-service' | sort | uniq | tr '\n' ' ')
+            CHANGED_NODE_SERVICES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -o 'courier-[^/]*' | grep -v 'courier-[^/]*-service' | sort | uniq | tr '\n' ' ')
+            
+            echo "Changed Java services: $CHANGED_JAVA_SERVICES"
+            echo "Changed Node.js services: $CHANGED_NODE_SERVICES"
+            
+            CHANGED_SERVICES="$CHANGED_JAVA_SERVICES $CHANGED_NODE_SERVICES"
+            echo "::set-output name=changed_services::$CHANGED_SERVICES"
+          fi
+
+  test-java:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.java_changes == 'true' || contains(needs.detect-changes.outputs.changed_services, '-service') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [11]
+        service: ${{ fromJson(needs.detect-changes.outputs.changed_services) }}
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'adopt'
+        cache: maven
+    
+    - name: Test with Maven
+      run: |
+        cd ${{ matrix.service }}
+        ./mvnw clean verify
+        ./mvnw jacoco:report
+      
+    - name: Save test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: java-test-results-${{ matrix.service }}
+        path: |
+          ${{ matrix.service }}/target/surefire-reports/
+          ${{ matrix.service }}/target/failsafe-reports/
+          ${{ matrix.service }}/target/site/jacoco/
+  
+  test-node:
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.node_changes == 'true' || (!contains(needs.detect-changes.outputs.changed_services, '-service') && needs.detect-changes.outputs.changed_services != '') || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+        service: ${{ fromJson(needs.detect-changes.outputs.changed_services) }}
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: ${{ matrix.service }}/package-lock.json
+    
+    - name: Determine package manager
+      id: pkg-manager
+      run: |
+        cd ${{ matrix.service }}
+        if [ -f "yarn.lock" ]; then
+          echo "::set-output name=manager::yarn"
+        else
+          echo "::set-output name=manager::npm"
+        fi
+    
+    - name: Install dependencies
+      run: |
+        cd ${{ matrix.service }}
+        if [ "${{ steps.pkg-manager.outputs.manager }}" == "yarn" ]; then
+          yarn install --frozen-lockfile
+        else
+          npm ci
+        fi
+    
+    - name: Run tests with coverage
+      run: |
+        cd ${{ matrix.service }}
+        if [ "${{ steps.pkg-manager.outputs.manager }}" == "yarn" ]; then
+          yarn test:coverage
+        else
+          npm run test:coverage
+        fi
+    
+    - name: Save test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: node-test-results-${{ matrix.service }}
+        path: ${{ matrix.service }}/coverage/
+
+  gather-reports:
+    needs: [test-java, test-node]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: all-reports
+    
+    - name: Install PowerShell
+      uses: PowerShell/powershell-action@v1
+      
+    - name: Generate consolidated report
+      shell: pwsh
+      run: |
+        # Create report directory structure
+        mkdir -p combined-report
+        
+        # Copy all reports to combined structure
+        cp -r all-reports/*/* combined-report/
+        
+        # Create summary report
+        $reportDir = "combined-report"
+        $services = (Get-ChildItem -Path $reportDir -Directory).Name
+        
+        $totalServices = $services.Count
+        $passedServices = 0
+        
+        foreach ($service in $services) {
+          # Check if test reports exist and no failures
+          if ((Test-Path "$reportDir/$service/TEST-*.xml") -and -not (Select-String -Path "$reportDir/$service/TEST-*.xml" -Pattern "<failure")) {
+            $passedServices++
+          }
+        }
+        
+        $successRate = [math]::Round(($passedServices / $totalServices) * 100, 2)
+        
+        $summaryContent = @"
+        # Test Summary Report
+        
+        * Tests run on: $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+        * Services tested: $totalServices
+        * Services passed: $passedServices
+        * Success rate: $successRate%
+        
+        ## Individual Service Results
+        
+        | Service | Status | Coverage |
+        |---------|--------|----------|
+        "@
+        
+        foreach ($service in $services) {
+          $status = "Unknown"
+          $coverage = "N/A"
+          
+          # Determine test status
+          if ((Test-Path "$reportDir/$service/TEST-*.xml")) {
+            if (Select-String -Path "$reportDir/$service/TEST-*.xml" -Pattern "<failure") {
+              $status = "❌ Failed"
+            } else {
+              $status = "✅ Passed"
+            }
+          }
+          
+          # Get coverage if available
+          if (Test-Path "$reportDir/$service/jacoco/index.html") {
+            $coverageFile = Get-Content "$reportDir/$service/jacoco/index.html" -Raw
+            if ($coverageFile -match 'Total.*?([0-9.]+)%') {
+              $coverage = "$($matches[1])%"
+            }
+          } elseif (Test-Path "$reportDir/$service/lcov-report/index.html") {
+            $coverageFile = Get-Content "$reportDir/$service/lcov-report/index.html" -Raw
+            if ($coverageFile -match 'headerCovTableEntryHi.*?>([0-9.]+)%') {
+              $coverage = "$($matches[1])%"
+            }
+          }
+          
+          $summaryContent += "`n| $service | $status | $coverage |"
+        }
+        
+        Set-Content -Path "combined-report/test-summary.md" -Value $summaryContent
+    
+    - name: Upload consolidated report
+      uses: actions/upload-artifact@v3
+      with:
+        name: consolidated-test-report
+        path: combined-report/
+
+    - name: Generate badge
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: courier-services-test-status
+        filename: courier-services-test-badge.json
+        label: Tests
+        message: ${{ env.SUCCESS_RATE }}% passing
+        color: ${{ env.BADGE_COLOR }}
+        namedLogo: github-actions

@@ -1,0 +1,124 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /branch-courier-app
+
+spring:
+  application:
+    name: branch-courier-app
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/branch_courier_app
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  
+  # Kafka configuration for dashboard communication
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: branch-courier-app
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.microsocial.courier.model.dto,com.microsocial.courier.model.dashboard
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  
+  # Distributed Tracing Configuration
+  sleuth:
+    sampler:
+      probability: 1.0
+    baggage:
+      remote-fields: x-branch-id
+      correlation-fields: x-branch-id
+    opentracing:
+      enabled: true
+    web:
+      client:
+        enabled: true
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+    service:
+      name: ${spring.application.name}
+    message-timeout: 5
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+  endpoint:
+    health:
+      show-details: always
+  info:
+    git:
+      mode: full
+
+# API documentation
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.microsocial.courier: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/branch-courier-app.log
+
+# Branch Courier App Specific Configuration
+branch-courier-app:
+  dashboard:
+    enabled: true
+    sync-interval-seconds: 60
+    cache:
+      enabled: true
+      expiration-seconds: 300
+    topics:
+      incoming: branch-metrics-requests
+      outgoing: branch-metrics-responses
+  offline-mode:
+    enabled: true
+    sync-attempts: 3
+    sync-retry-delay-seconds: 30
+  metrics:
+    collection-interval-seconds: 30
+    retention-days: 7
+  courier-management:
+    integration:
+      enabled: true
+      base-url: http://localhost:8081/courier-management
+      connect-timeout-seconds: 5
+      read-timeout-seconds: 30
+      retry-attempts: 3

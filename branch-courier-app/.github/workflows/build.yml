@@ -1,0 +1,56 @@
+name: Build Hybrid Service
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Node.js dependencies
+      run: npm ci
+    
+    - name: Build React Native components
+      run: npm run build || echo "No React Native build step configured"
+    
+    - name: Build Java backend with Maven
+      run: mvn clean compile
+    
+    - name: Package Java application
+      run: mvn package -DskipTests
+    
+    - name: Upload Java artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: java-artifacts
+        path: target/*.jar
+        retention-days: 7
+    
+    - name: Upload React Native artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: react-native-artifacts
+        path: |
+          android/app/src/main/assets/
+          ios/
+        retention-days: 7
+      continue-on-error: true

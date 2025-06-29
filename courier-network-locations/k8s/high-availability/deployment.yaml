@@ -1,0 +1,167 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-network-locations
+  namespace: micro-social-ecommerce
+  labels:
+    app: courier-network-locations
+    tier: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: courier-network-locations
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courier-network-locations
+  namespace: micro-social-ecommerce
+  labels:
+    app: courier-network-locations
+    tier: backend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: courier-network-locations
+  template:
+    metadata:
+      labels:
+        app: courier-network-locations
+        tier: backend
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - courier-network-locations
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: courier-network-locations
+        image: ${ECR_REPOSITORY}/courier-network-locations:${IMAGE_TAG}
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 12  # Allow up to 2 minutes (12 * 10s) for startup
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+        - name: JAVA_OPTS
+          value: "-XX:+UseG1GC -XX:MaxGCPauseMillis=200 -Xms512m -Xmx768m"
+        - name: SERVER_TOMCAT_MAX_THREADS
+          value: "200"
+        - name: SERVER_TOMCAT_MIN_SPARE_THREADS
+          value: "20"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: password
+        - name: SPRING_REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: courier-services-config
+              key: redis.host
+        - name: SPRING_REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: courier-services-config
+              key: redis.port
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: log-volume
+          mountPath: /logs
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
+      - name: log-volume
+        persistentVolumeClaim:
+          claimName: courier-locations-logs-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: courier-locations-logs-pvc
+  namespace: micro-social-ecommerce
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: courier-network-locations-pdb
+  namespace: micro-social-ecommerce
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: courier-network-locations

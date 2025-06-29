@@ -1,0 +1,55 @@
+# Test configuration for integration tests
+server:
+  port: 0  # Random available port for testing
+
+spring:
+  profiles:
+    active: test
+  
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+        
+  h2:
+    console:
+      enabled: false
+      
+  security:
+    user:
+      name: test
+      password: test
+      roles: DRIVER,ADMIN
+
+# JWT Configuration for tests
+app:
+  jwtSecret: testSecretKeyForIntegrationTests12345678901234567890
+  jwtExpirationMs: 86400000 # 1 day
+
+# Firebase configuration (mock for testing)
+firebase:
+  project-id: test-project
+  private-key-id: test-key-id
+  
+# Logging configuration for tests
+logging:
+  level:
+    com.microecosystem.courier.driver.app: DEBUG
+    org.springframework.security: WARN
+    org.hibernate: WARN
+    org.springframework.web: WARN
+    
+# Test-specific configuration
+integration-test:
+  mock-external-services: true
+  timeout-ms: 5000

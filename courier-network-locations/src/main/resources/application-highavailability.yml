@@ -1,0 +1,153 @@
+# High Availability Configuration
+spring:
+  # Database Configuration with Read/Write Split
+  datasource:
+    primary:
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 20
+        idle-timeout: 30000
+        max-lifetime: 2000000
+        connection-timeout: 30000
+    replica:
+      url: jdbc:postgresql://courier-locations-db-read:5432/courier_locations
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 20
+        idle-timeout: 30000
+        max-lifetime: 2000000
+        connection-timeout: 30000
+  
+  # Redis Configuration for Distributed Caching
+  redis:
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
+    timeout: 2000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 2
+        max-wait: -1ms
+  
+  # Session Management for Stateless Architecture
+  session:
+    store-type: redis
+    redis:
+      namespace: courier-locations:session
+      flush-mode: on-save
+  
+  # Cloud Configuration
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: polling
+        period: 30000
+      config:
+        enabled: true
+        sources:
+          - name: courier-services-config
+      secrets:
+        enabled: true
+        paths:
+          - /etc/secrets
+
+  # Circuit Breaker Configuration
+  resilience4j:
+    circuitbreaker:
+      instances:
+        databaseService:
+          registerHealthIndicator: true
+          slidingWindowSize: 10
+          slidingWindowType: COUNT_BASED
+          permittedNumberOfCallsInHalfOpenState: 3
+          waitDurationInOpenState: 5s
+          failureRateThreshold: 50
+          automaticTransitionFromOpenToHalfOpenEnabled: true
+    retry:
+      instances:
+        databaseService:
+          maxAttempts: 3
+          waitDuration: 1s
+          enableExponentialBackoff: true
+          exponentialBackoffMultiplier: 2
+    timelimiter:
+      instances:
+        databaseService:
+          timeoutDuration: 5s
+          cancelRunningFuture: true
+
+# Server Configuration
+server:
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 20
+    max-connections: 10000
+    accept-count: 100
+    connection-timeout: 20000
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+    min-response-size: 2048
+
+# Management Endpoints for Health Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,loggers
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState,diskSpace
+        readiness:
+          include: readinessState,db,redis
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+    db:
+      enabled: true
+    redis:
+      enabled: true
+
+# Logging Configuration
+logging:
+  file:
+    name: /logs/courier-locations.log
+  level:
+    root: INFO
+    com.socialecommerceecosystem: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Application-specific Configuration
+application:
+  security:
+    jwt:
+      token-validity-in-seconds: 86400
+      token-validity-in-seconds-for-remember-me: 2592000
+  cache:
+    service-ttl: 900  # 15 minutes
+    reference-ttl: 3600  # 1 hour
+    dashboard-ttl: 60  # 1 minute
+  resilience:
+    retry-attempts: 3
+    timeout-seconds: 5
+    circuit-breaker-threshold: 50

@@ -1,0 +1,121 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /driver-app
+
+spring:
+  application:
+    name: driver-mobile-app
+  datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/driver_app}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  security:
+    jwt:
+      secret: ${JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+      expiration: 86400000 # 24 hours in milliseconds
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    disable-swagger-default-url: true
+  packages-to-scan: com.microecosystem.courier.driver.app.controller
+
+logging:
+  level:
+    root: INFO
+    com.microecosystem.courier: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      notificationService:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+  retry:
+    instances:
+      notificationService:
+        maxRetryAttempts: 3
+        waitDuration: 1000
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  circuitbreaker:
+    enabled: true
+
+app:
+  jwt:
+    expiration-ms: 86400000 # 24 hours
+  firebase:
+    config-file: firebase-service-account.json
+  location:
+    accuracy-threshold: 50 # meters
+    update-interval: 30000 # 30 seconds in milliseconds
+  security:
+    allowed-origins: http://localhost:3000,https://driver-app.microecosystem.com
+
+driver:
+  navigation:
+    api-url: https://maps.googleapis.com/maps/api
+    api-key: ${NAVIGATION_API_KEY:your-api-key-here}
+    use-traffic: true
+    prefetch-radius-km: 5
+  sync:
+    batch-size: 100
+    conflict-resolution-strategy: SERVER_WINS
+    max-cache-size-mb: 100
+    data-retention-days: 7
+  assignment:
+    max-active-assignments: 5
+    auto-start-next-task: true
+    location-update-interval-sec: 60
+    geofence-radius-meters: 100
+    auto-complete-threshold-meters: 20

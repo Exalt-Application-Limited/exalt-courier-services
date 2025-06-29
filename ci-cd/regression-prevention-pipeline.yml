@@ -1,0 +1,346 @@
+# Zero Regression Strategy - CI/CD Pipeline Integration
+# Date: June 20, 2025
+# Version: 1.0
+# This pipeline connects all components of the Zero Regression Strategy
+
+name: courier-services-regression-prevention
+
+trigger:
+  branches:
+    include:
+    - main
+    - master
+    - feature/*
+    - release/*
+  paths:
+    include:
+    - 'social-ecommerce-ecosystem/courier-services/**'
+
+parameters:
+  - name: runApiCompatibilityCheck
+    displayName: Run API Compatibility Check
+    type: boolean
+    default: true
+  
+  - name: runCrossVersionTests
+    displayName: Run Cross-Version Tests
+    type: boolean
+    default: true
+    
+  - name: servicesToTest
+    displayName: Services to Test
+    type: object
+    default:
+      - name: courier-management
+        oldServiceUrl: http://old-courier-management:8080
+        newServiceUrl: http://new-courier-management:8080
+        framework: java
+      - name: courier-availability
+        oldServiceUrl: http://old-courier-availability:3000
+        newServiceUrl: http://new-courier-availability:3000
+        framework: nodejs
+      - name: delivery-scheduling
+        oldServiceUrl: http://old-delivery-scheduling:8080
+        newServiceUrl: http://new-delivery-scheduling:8080
+        framework: java
+      - name: package-tracking
+        oldServiceUrl: http://old-package-tracking:3000
+        newServiceUrl: http://new-package-tracking:3000
+        framework: nodejs
+
+stages:
+  - stage: CodeQualityAndCompliance
+    displayName: Code Quality and Compliance
+    jobs:
+      - job: LintingAndFormatting
+        displayName: Code Linting and Formatting
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Run Java Linting (Checkstyle)'
+            inputs:
+              targetType: 'inline'
+              script: |
+                foreach ($service in ${{ parameters.servicesToTest }}) {
+                  if ($service.framework -eq 'java') {
+                    Write-Host "Running checkstyle for $($service.name)"
+                    cd social-ecommerce-ecosystem/courier-services/$($service.name)
+                    ./mvnw checkstyle:check
+                  }
+                }
+              
+          - task: PowerShell@2
+            displayName: 'Run Node.js Linting (ESLint)'
+            inputs:
+              targetType: 'inline'
+              script: |
+                foreach ($service in ${{ parameters.servicesToTest }}) {
+                  if ($service.framework -eq 'nodejs') {
+                    Write-Host "Running eslint for $($service.name)"
+                    cd social-ecommerce-ecosystem/courier-services/$($service.name)
+                    npm run lint
+                  }
+                }
+                
+      - job: UnitTests
+        displayName: Run Unit Tests
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Run Java Unit Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                foreach ($service in ${{ parameters.servicesToTest }}) {
+                  if ($service.framework -eq 'java') {
+                    Write-Host "Running unit tests for $($service.name)"
+                    cd social-ecommerce-ecosystem/courier-services/$($service.name)
+                    ./mvnw test
+                  }
+                }
+                
+          - task: PowerShell@2
+            displayName: 'Run Node.js Unit Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                foreach ($service in ${{ parameters.servicesToTest }}) {
+                  if ($service.framework -eq 'nodejs') {
+                    Write-Host "Running unit tests for $($service.name)"
+                    cd social-ecommerce-ecosystem/courier-services/$($service.name)
+                    npm test
+                  }
+                }
+
+  - stage: ApiCompatibilityChecks
+    displayName: API Compatibility Checks
+    dependsOn: CodeQualityAndCompliance
+    condition: and(succeeded(), eq(${{ parameters.runApiCompatibilityCheck }}, true))
+    jobs:
+      - job: CheckApiCompatibility
+        displayName: Check API Compatibility
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Run API Compatibility Checker'
+            inputs:
+              filePath: 'social-ecommerce-ecosystem/courier-services/api-compatibility-checker.ps1'
+              arguments: '-verbose -checkAll'
+              
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish API Compatibility Report'
+            inputs:
+              targetPath: 'social-ecommerce-ecosystem/courier-services/api-compatibility-reports'
+              artifact: 'api-compatibility-report'
+              publishLocation: 'pipeline'
+              
+  - stage: CrossVersionTesting
+    displayName: Cross-Version Testing
+    dependsOn: CodeQualityAndCompliance
+    condition: and(succeeded(), eq(${{ parameters.runCrossVersionTests }}, true))
+    jobs:
+      - job: RunCrossVersionTests
+        displayName: Run Cross-Version Tests
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Configure Services for Cross-Version Testing'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Set up test environment for running both old and new versions
+                Write-Host "Configuring services for cross-version testing"
+                # In a real CI/CD environment, this would use docker-compose or Kubernetes
+                # to spin up both versions of each service
+                
+          - task: PowerShell@2
+            displayName: 'Run Cross-Version Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Create output directory
+                $outputDir = "$(Build.ArtifactStagingDirectory)/cross-version-test-results"
+                New-Item -ItemType Directory -Path $outputDir -Force
+                
+                # Run tests for each service
+                foreach ($service in ${{ parameters.servicesToTest }}) {
+                  Write-Host "Running cross-version tests for $($service.name)"
+                  
+                  # First capture traffic patterns
+                  .\social-ecommerce-ecosystem\courier-services\cross-version-testing\cross-version-test-harness.ps1 `
+                    -ServiceName $service.name `
+                    -OldServiceUrl $service.oldServiceUrl `
+                    -CaptureMode `
+                    -DurationMinutes 5 `
+                    -OutputDir $outputDir
+                    
+                  $captureFile = Get-ChildItem -Path $outputDir -Filter "captured-traffic-$($service.name)-*.json" | 
+                                Sort-Object LastWriteTime -Descending | 
+                                Select-Object -First 1 -ExpandProperty FullName
+                  
+                  # Then replay against both old and new
+                  .\social-ecommerce-ecosystem\courier-services\cross-version-testing\cross-version-test-harness.ps1 `
+                    -ServiceName $service.name `
+                    -OldServiceUrl $service.oldServiceUrl `
+                    -NewServiceUrl $service.newServiceUrl `
+                    -ReplayMode `
+                    -TestDataFile $captureFile `
+                    -RequestsPerSecond 10 `
+                    -OutputDir $outputDir
+                }
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Cross-Version Test Results'
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/cross-version-test-results'
+              artifact: 'cross-version-test-results'
+              publishLocation: 'pipeline'
+
+  - stage: FeatureFlagValidation
+    displayName: Feature Flag Validation
+    dependsOn: [ApiCompatibilityChecks, CrossVersionTesting]
+    condition: succeeded()
+    jobs:
+      - job: ValidateFeatureFlagConfig
+        displayName: Validate Feature Flag Configuration
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Validate Feature Flag Configuration'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Validate feature flag configuration JSON
+                $configPath = "social-ecommerce-ecosystem/courier-services/feature-flags/config.json"
+                
+                # Check if file exists
+                if (-not (Test-Path $configPath)) {
+                  Write-Error "Feature flag configuration file not found at: $configPath"
+                  exit 1
+                }
+                
+                # Validate JSON structure
+                try {
+                  $config = Get-Content $configPath -Raw | ConvertFrom-Json
+                  
+                  # Check required fields
+                  if (-not $config.flags -or $config.flags.Count -eq 0) {
+                    Write-Error "Feature flag configuration must contain a 'flags' array with at least one flag"
+                    exit 1
+                  }
+                  
+                  # Validate each flag
+                  foreach ($flag in $config.flags) {
+                    if (-not $flag.name) {
+                      Write-Error "Each feature flag must have a 'name' field"
+                      exit 1
+                    }
+                    
+                    if (-not ($flag.PSObject.Properties.Name -contains "enabled")) {
+                      Write-Error "Flag '$($flag.name)' must have an 'enabled' field"
+                      exit 1
+                    }
+                    
+                    if (-not ($flag.PSObject.Properties.Name -contains "rolloutPercentage")) {
+                      Write-Error "Flag '$($flag.name)' must have a 'rolloutPercentage' field"
+                      exit 1
+                    }
+                  }
+                  
+                  # Validate dependencies to prevent circular references
+                  $flagNames = $config.flags | ForEach-Object { $_.name }
+                  foreach ($flag in $config.flags) {
+                    if ($flag.dependencies) {
+                      foreach ($dep in $flag.dependencies) {
+                        if (-not ($flagNames -contains $dep)) {
+                          Write-Error "Flag '$($flag.name)' depends on non-existent flag '$dep'"
+                          exit 1
+                        }
+                      }
+                    }
+                  }
+                  
+                  Write-Host "Feature flag configuration is valid"
+                } catch {
+                  Write-Error "Failed to validate feature flag configuration: $_"
+                  exit 1
+                }
+
+  - stage: DeploymentPreparation
+    displayName: Deployment Preparation
+    dependsOn: FeatureFlagValidation
+    condition: succeeded()
+    jobs:
+      - job: PrepareDeployment
+        displayName: Prepare Deployment Package
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Generate Deployment Report'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $reportDir = "$(Build.ArtifactStagingDirectory)/deployment-report"
+                New-Item -ItemType Directory -Path $reportDir -Force
+                
+                # Generate deployment report with all regression prevention measures
+                $report = @{
+                  "timestamp" = (Get-Date -Format "o")
+                  "pipeline" = "$(Build.DefinitionName)"
+                  "buildId" = "$(Build.BuildId)"
+                  "branch" = "$(Build.SourceBranchName)"
+                  "apiCompatibilityChecked" = ${{ parameters.runApiCompatibilityCheck }}
+                  "crossVersionTestsRun" = ${{ parameters.runCrossVersionTests }}
+                  "services" = @(${{ parameters.servicesToTest }})
+                  "featureFlagValidated" = $true
+                  "rolloutRecommendation" = "Safe to proceed with controlled rollout using feature flags"
+                }
+                
+                $report | ConvertTo-Json -Depth 5 | Out-File "$reportDir/deployment-report.json"
+                
+                # Also generate a human-readable markdown report
+                $markdown = @"
+                # Courier Services Domain Transformation - Deployment Report
+                
+                **Build ID:** $(Build.BuildId)  
+                **Branch:** $(Build.SourceBranchName)  
+                **Date:** $(Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+                
+                ## Regression Prevention Measures
+                
+                | Measure | Status |
+                |---------|--------|
+                | API Compatibility Check | $(${{ parameters.runApiCompatibilityCheck }} ? "✅ Passed" : "⚠️ Skipped") |
+                | Cross-Version Tests | $(${{ parameters.runCrossVersionTests }} ? "✅ Passed" : "⚠️ Skipped") |
+                | Feature Flag Validation | ✅ Passed |
+                
+                ## Services Ready for Deployment
+                
+                $(((${{ parameters.servicesToTest }}) | ForEach-Object { "- $($_.name) ($($_.framework))" }) -join "`n")
+                
+                ## Rollout Recommendation
+                
+                Safe to proceed with controlled rollout using feature flags.
+                
+                ## Next Steps
+                
+                1. Deploy services with feature flags set to 0% (shadow mode)
+                2. Monitor cross-version testing results in production environment
+                3. Gradually increase feature flag percentages according to rollout plan
+                4. Continue monitoring and be ready to roll back if needed
+                "@
+                
+                $markdown | Out-File "$reportDir/deployment-report.md"
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Deployment Report'
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/deployment-report'
+              artifact: 'deployment-report'
+              publishLocation: 'pipeline'

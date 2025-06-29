@@ -1,0 +1,66 @@
+name: Run Hybrid Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  java-tests:
+    runs-on: ubuntu-latest
+    name: Java Backend Tests
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Run Java unit tests
+      run: mvn test
+    
+    - name: Generate Java test report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Maven Tests
+        path: target/surefire-reports/*.xml
+        reporter: java-junit
+    
+    - name: Upload Java coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: target/site/jacoco/jacoco.xml
+        fail_ci_if_error: false
+        flags: java
+  
+  react-native-tests:
+    runs-on: ubuntu-latest
+    name: React Native Tests
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run React Native tests
+      run: npm test -- --coverage --watchAll=false
+    
+    - name: Upload React Native coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        fail_ci_if_error: false
+        flags: react-native

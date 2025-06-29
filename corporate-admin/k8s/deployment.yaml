@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: corporate-admin
+  namespace: courier-services
+  labels:
+    app: corporate-admin
+    domain: courier-services
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: corporate-admin
+  template:
+    metadata:
+      labels:
+        app: corporate-admin
+        domain: courier-services
+        tier: frontend
+    spec:
+      containers:
+      - name: corporate-admin
+        image: ${DOCKER_REGISTRY}/corporate-admin:${IMAGE_TAG}
+        ports:
+        - containerPort: 80
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: corporate-admin-config
+              key: api-url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: corporate-admin-config
+  namespace: courier-services
+data:
+  api-url: "http://api-gateway-service.courier-services.svc.cluster.local"
+  app-name: "corporate-admin"

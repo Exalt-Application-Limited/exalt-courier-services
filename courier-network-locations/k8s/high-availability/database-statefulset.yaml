@@ -1,0 +1,200 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: courier-locations-db
+  namespace: micro-social-ecommerce
+spec:
+  serviceName: "courier-locations-db"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: courier-locations-db
+  template:
+    metadata:
+      labels:
+        app: courier-locations-db
+    spec:
+      terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: init-config
+        image: postgres:15-alpine
+        command: ['sh', '-c', "echo 'checking for primary'; until pg_isready -h courier-locations-db-0.courier-locations-db; do echo waiting for primary; sleep 2; done"]
+        env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: password
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: courier-locations-db-credentials
+              key: password
+        - name: POSTGRES_DB
+          value: courier_locations
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        - name: postgres-config
+          mountPath: /etc/postgresql/postgresql.conf
+          subPath: postgresql.conf
+        - name: postgres-config
+          mountPath: /etc/postgresql/pg_hba.conf
+          subPath: pg_hba.conf
+        - name: init-scripts
+          mountPath: /docker-entrypoint-initdb.d
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready -U postgres -h $POD_NAME
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - exec pg_isready -U postgres -h $POD_NAME
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 15
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+      volumes:
+      - name: postgres-config
+        configMap:
+          name: postgres-config
+      - name: init-scripts
+        configMap:
+          name: db-init-scripts
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-locations-db
+  namespace: micro-social-ecommerce
+  labels:
+    app: courier-locations-db
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: postgres
+  clusterIP: None
+  selector:
+    app: courier-locations-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-locations-db-read
+  namespace: micro-social-ecommerce
+  labels:
+    app: courier-locations-db
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+    name: postgres
+  selector:
+    app: courier-locations-db
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: micro-social-ecommerce
+data:
+  postgresql.conf: |
+    listen_addresses = '*'
+    max_connections = 100
+    shared_buffers = 256MB
+    effective_cache_size = 768MB
+    work_mem = 8MB
+    maintenance_work_mem = 64MB
+    max_wal_size = 1GB
+    min_wal_size = 80MB
+    checkpoint_completion_target = 0.9
+    wal_buffers = 16MB
+    default_statistics_target = 100
+    random_page_cost = 1.1
+    effective_io_concurrency = 200
+    synchronous_commit = on
+    wal_level = replica
+    hot_standby = on
+    max_wal_senders = 10
+    max_replication_slots = 10
+    hot_standby_feedback = on
+    log_min_duration_statement = 1000  # log queries taking more than 1s
+
+  pg_hba.conf: |
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+    local   all             postgres                                trust
+    host    all             postgres        127.0.0.1/32            trust
+    host    all             postgres        ::1/128                 trust
+    host    replication     postgres        all                     md5
+    host    all             all             all                     md5
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-init-scripts
+  namespace: micro-social-ecommerce
+data:
+  init.sh: |
+    #!/bin/bash
+    set -e
+    
+    # If this is not the primary pod (0), set up as replica
+    if [[ "$POD_NAME" != "courier-locations-db-0" ]]; then
+      # Stop PostgreSQL if it's running
+      pg_ctl -D "$PGDATA" -m fast -w stop
+      
+      # Clean data directory
+      rm -rf "$PGDATA"/*
+      
+      # Set up replication from primary
+      pg_basebackup -h courier-locations-db-0.courier-locations-db -U postgres -p 5432 -D "$PGDATA" -Fp -Xs -R
+      
+      # Create recovery.conf file
+      cat > "$PGDATA/recovery.conf" <<-EOF
+      standby_mode = 'on'
+      primary_conninfo = 'host=courier-locations-db-0.courier-locations-db port=5432 user=postgres password=$POSTGRES_PASSWORD'
+      trigger_file = '/tmp/postgresql.trigger.failover'
+      EOF
+    fi

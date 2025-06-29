@@ -1,0 +1,88 @@
+spring:
+  application:
+    name: commission-service
+  
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  
+  cloud:
+    discovery:
+      enabled: false
+    config:
+      enabled: false
+  
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    default-property-inclusion: NON_NULL
+
+server:
+  port: 8085
+  servlet:
+    context-path: /
+
+# Eureka client settings
+eureka:
+  client:
+    enabled: false
+    registerWithEureka: false
+    fetchRegistry: false
+
+# Feign client settings
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  circuitbreaker:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+# Commission service specific settings
+commission-service:
+  payment:
+    processing:
+      cron: "0 0 2 * * ?" # Daily at 2am
+  commission:
+    recalculation:
+      cron: "0 0 3 1 * ?" # Monthly at 3am on 1st day
+  integration:
+    payout-service:
+      url: http://payout-service
+      timeout: 5000
+      retry-attempts: 3
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.social.ecommerce.courier.commission: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Springdoc OpenAPI settings
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha

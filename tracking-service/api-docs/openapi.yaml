@@ -1,0 +1,758 @@
+openapi: 3.0.3
+info:
+  title: Tracking Service API
+  description: API for package tracking operations in the courier services domain
+  version: 0.1.0
+  contact:
+    name: Micro-Social-Ecommerce-Ecosystems Team
+    email: support@microecosystem.com
+servers:
+  - url: /api/v1
+    description: Base API path
+tags:
+  - name: packages
+    description: Package tracking operations
+  - name: events
+    description: Tracking event operations
+  - name: statistics
+    description: Package delivery statistics
+paths:
+  /tracking/packages:
+    post:
+      tags:
+        - packages
+      summary: Create a new package
+      description: Create a new package in the tracking system
+      operationId: createPackage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePackageRequest'
+        required: true
+      responses:
+        '201':
+          description: Package created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDTO'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}:
+    get:
+      tags:
+        - packages
+      summary: Get a package by tracking number
+      description: Get a package by its tracking number
+      operationId: getPackageByTrackingNumber
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}/status:
+    put:
+      tags:
+        - packages
+      summary: Update package status
+      description: Update the status of a package
+      operationId: updatePackageStatus
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePackageStatusRequest'
+        required: true
+      responses:
+        '200':
+          description: Status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDTO'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}/delivery-attempts:
+    post:
+      tags:
+        - packages
+      summary: Record a delivery attempt
+      description: Record a delivery attempt for a package
+      operationId: recordDeliveryAttempt
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: Description of the delivery attempt
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: query
+          description: Location of the delivery attempt
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delivery attempt recorded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}/delivered:
+    post:
+      tags:
+        - packages
+      summary: Mark a package as delivered
+      description: Mark a package as delivered
+      operationId: markDelivered
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: Description of the delivery
+          required: true
+          schema:
+            type: string
+        - name: signatureImage
+          in: query
+          description: Signature image (base64 encoded)
+          required: false
+          schema:
+            type: string
+        - name: location
+          in: query
+          description: Location of the delivery
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Package marked as delivered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}/events:
+    post:
+      tags:
+        - events
+      summary: Add a tracking event
+      description: Add a tracking event to a package
+      operationId: addTrackingEvent
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of the event
+          required: true
+          schema:
+            $ref: '#/components/schemas/TrackingStatus'
+        - name: description
+          in: query
+          description: Description of the event
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: query
+          description: Location of the event
+          required: false
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Tracking event added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingEventDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - events
+      summary: Get tracking events
+      description: Get all tracking events for a package
+      operationId: getTrackingEvents
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrackingEventDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/{trackingNumber}/events/geo:
+    post:
+      tags:
+        - events
+      summary: Add a tracking event with geolocation
+      description: Add a tracking event with geolocation data to a package
+      operationId: addTrackingEventWithGeolocation
+      parameters:
+        - name: trackingNumber
+          in: path
+          description: Tracking number of the package
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of the event
+          required: true
+          schema:
+            $ref: '#/components/schemas/TrackingStatus'
+        - name: description
+          in: query
+          description: Description of the event
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: query
+          description: Location of the event
+          required: true
+          schema:
+            type: string
+        - name: latitude
+          in: query
+          description: Latitude of the event
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: longitude
+          in: query
+          description: Longitude of the event
+          required: true
+          schema:
+            type: number
+            format: double
+      responses:
+        '201':
+          description: Tracking event added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingEventDTO'
+        '404':
+          description: Package not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tracking/packages/status/{status}:
+    get:
+      tags:
+        - packages
+      summary: Get packages by status
+      description: Get all packages with a specific status
+      operationId: getPackagesByStatus
+      parameters:
+        - name: status
+          in: path
+          description: Status to filter by
+          required: true
+          schema:
+            $ref: '#/components/schemas/TrackingStatus'
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Page size
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          description: Sort field and direction (e.g. createdAt,desc)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackagePage'
+  /tracking/statistics:
+    get:
+      tags:
+        - statistics
+      summary: Get package delivery statistics
+      description: Get statistics about package delivery
+      operationId: getPackageStatistics
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageStatistics'
+components:
+  schemas:
+    CreatePackageRequest:
+      type: object
+      required:
+        - senderName
+        - senderAddress
+        - recipientName
+        - recipientAddress
+        - estimatedDeliveryDate
+      properties:
+        senderName:
+          type: string
+          maxLength: 100
+          description: Name of the sender
+        senderAddress:
+          type: string
+          maxLength: 255
+          description: Address of the sender
+        recipientName:
+          type: string
+          maxLength: 100
+          description: Name of the recipient
+        recipientAddress:
+          type: string
+          maxLength: 255
+          description: Address of the recipient
+        recipientPhone:
+          type: string
+          maxLength: 20
+          description: Phone number of the recipient
+        recipientEmail:
+          type: string
+          maxLength: 100
+          description: Email of the recipient
+        estimatedDeliveryDate:
+          type: string
+          format: date-time
+          description: Estimated delivery date and time
+        weight:
+          type: number
+          format: double
+          description: Weight of the package in kg
+        dimensions:
+          type: string
+          description: Dimensions of the package (e.g. 10x20x30 cm)
+        orderId:
+          type: string
+          description: Order ID associated with the package
+        courierId:
+          type: integer
+          format: int64
+          description: ID of the courier assigned to the package
+        routeId:
+          type: integer
+          format: int64
+          description: ID of the route assigned to the package
+        signatureRequired:
+          type: boolean
+          description: Whether signature is required for delivery
+        deliveryInstructions:
+          type: string
+          maxLength: 500
+          description: Special instructions for delivery
+    UpdatePackageStatusRequest:
+      type: object
+      required:
+        - status
+        - description
+      properties:
+        status:
+          $ref: '#/components/schemas/TrackingStatus'
+        description:
+          type: string
+          maxLength: 500
+          description: Description of the status update
+        location:
+          type: string
+          maxLength: 255
+          description: Location of the status update
+        latitude:
+          type: number
+          format: double
+          description: Latitude of the status update location
+        longitude:
+          type: number
+          format: double
+          description: Longitude of the status update location
+        courierId:
+          type: integer
+          format: int64
+          description: ID of the courier involved in the status update
+        facilityId:
+          type: integer
+          format: int64
+          description: ID of the facility involved in the status update
+        scanType:
+          type: string
+          maxLength: 50
+          description: Type of scan (e.g. barcode, QR code)
+        notes:
+          type: string
+          maxLength: 1000
+          description: Additional notes about the status update
+    PackageDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the package
+        trackingNumber:
+          type: string
+          description: Tracking number of the package
+        status:
+          $ref: '#/components/schemas/TrackingStatus'
+        senderName:
+          type: string
+          description: Name of the sender
+        senderAddress:
+          type: string
+          description: Address of the sender
+        recipientName:
+          type: string
+          description: Name of the recipient
+        recipientAddress:
+          type: string
+          description: Address of the recipient
+        recipientPhone:
+          type: string
+          description: Phone number of the recipient
+        recipientEmail:
+          type: string
+          description: Email of the recipient
+        estimatedDeliveryDate:
+          type: string
+          format: date-time
+          description: Estimated delivery date and time
+        actualDeliveryDate:
+          type: string
+          format: date-time
+          description: Actual delivery date and time
+        weight:
+          type: number
+          format: double
+          description: Weight of the package in kg
+        dimensions:
+          type: string
+          description: Dimensions of the package
+        orderId:
+          type: string
+          description: Order ID associated with the package
+        courierId:
+          type: integer
+          format: int64
+          description: ID of the courier assigned to the package
+        routeId:
+          type: integer
+          format: int64
+          description: ID of the route assigned to the package
+        signatureRequired:
+          type: boolean
+          description: Whether signature is required for delivery
+        signatureImage:
+          type: string
+          description: Base64 encoded signature image
+        deliveryInstructions:
+          type: string
+          description: Special instructions for delivery
+        deliveryAttempts:
+          type: integer
+          description: Number of delivery attempts
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackingEventDTO'
+          description: List of tracking events
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation date and time
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update date and time
+    TrackingEventDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID of the tracking event
+        status:
+          $ref: '#/components/schemas/TrackingStatus'
+        description:
+          type: string
+          description: Description of the event
+        eventTime:
+          type: string
+          format: date-time
+          description: Date and time of the event
+        location:
+          type: string
+          description: Location of the event
+        latitude:
+          type: number
+          format: double
+          description: Latitude of the event location
+        longitude:
+          type: number
+          format: double
+          description: Longitude of the event location
+        courierId:
+          type: integer
+          format: int64
+          description: ID of the courier involved in the event
+        facilityId:
+          type: integer
+          format: int64
+          description: ID of the facility involved in the event
+        scanType:
+          type: string
+          description: Type of scan (e.g. barcode, QR code)
+        notes:
+          type: string
+          description: Additional notes about the event
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation date and time
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update date and time
+    TrackingStatus:
+      type: string
+      enum:
+        - CREATED
+        - INFORMATION_RECEIVED
+        - RECEIVED
+        - PROCESSING
+        - IN_TRANSIT
+        - ARRIVED_AT_FACILITY
+        - DEPARTED_FROM_FACILITY
+        - OUT_FOR_DELIVERY
+        - DELIVERY_ATTEMPTED
+        - DELIVERED
+        - RETURNED_TO_SENDER
+        - DELAYED
+        - HELD
+        - RESCHEDULED
+        - WAITING_FOR_CUSTOMER
+        - LOST
+        - DAMAGED
+        - CANCELLED
+        - AVAILABLE_FOR_PICKUP
+        - PICKED_UP
+        - CUSTOMS_CLEARED
+        - CUSTOMS_HOLD
+      description: Status of a package in the tracking system
+    PackageStatistics:
+      type: object
+      properties:
+        totalPackages:
+          type: integer
+          format: int64
+          description: Total number of packages
+        deliveredPackages:
+          type: integer
+          format: int64
+          description: Number of delivered packages
+        inTransitPackages:
+          type: integer
+          format: int64
+          description: Number of packages in transit
+        delayedPackages:
+          type: integer
+          format: int64
+          description: Number of delayed packages
+        returnedPackages:
+          type: integer
+          format: int64
+          description: Number of packages returned to sender
+        onTimeDeliveryRate:
+          type: number
+          format: double
+          description: Percentage of packages delivered on time
+        averageDeliveryAttempts:
+          type: number
+          format: double
+          description: Average number of delivery attempts per package
+    PackagePage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageDTO'
+          description: List of packages
+        pageable:
+          type: object
+          properties:
+            pageNumber:
+              type: integer
+              description: Current page number
+            pageSize:
+              type: integer
+              description: Page size
+            sort:
+              type: object
+              properties:
+                sorted:
+                  type: boolean
+                  description: Whether the results are sorted
+                unsorted:
+                  type: boolean
+                  description: Whether the results are unsorted
+                empty:
+                  type: boolean
+                  description: Whether the sort is empty
+        totalElements:
+          type: integer
+          format: int64
+          description: Total number of elements
+        totalPages:
+          type: integer
+          description: Total number of pages
+        size:
+          type: integer
+          description: Page size
+        number:
+          type: integer
+          description: Current page number
+        sort:
+          type: object
+          properties:
+            sorted:
+              type: boolean
+              description: Whether the results are sorted
+            unsorted:
+              type: boolean
+              description: Whether the results are unsorted
+            empty:
+              type: boolean
+              description: Whether the sort is empty
+        first:
+          type: boolean
+          description: Whether this is the first page
+        last:
+          type: boolean
+          description: Whether this is the last page
+        numberOfElements:
+          type: integer
+          description: Number of elements in the current page
+        empty:
+          type: boolean
+          description: Whether the page is empty
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the error
+        status:
+          type: integer
+          description: HTTP status code
+        error:
+          type: string
+          description: Error type
+        message:
+          type: string
+          description: Error message
+        path:
+          type: string
+          description: Request path

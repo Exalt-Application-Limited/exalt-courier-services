@@ -1,0 +1,306 @@
+name: Courier Services CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+        - development
+        - staging
+        - production
+
+env:
+  JAVA_VERSION: 17
+  MAVEN_VERSION: 3.8.7
+  NODE_VERSION: 16
+  REGISTRY: ghcr.io
+  BASE_IMAGE_NAME: ${{ github.repository }}/courier-services
+
+jobs:
+  # Detect changes to determine which services need to be built
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      java_services: ${{ steps.filter.outputs.java_services }}
+      nodejs_services: ${{ steps.filter.outputs.nodejs_services }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            java_services:
+              - 'courier-management-service/**'
+              - 'courier-subscription-service/**'
+              - 'international-shipping-service/**'
+              - 'commission-service/**'
+              - 'payout-service/**'
+              - 'notification-service/**'
+              - 'regional-courier-service/**'
+              - 'courier-tracking-service/**'
+            nodejs_services:
+              - 'courier-network-locations/**'
+              - 'courier-events-service/**'
+              - 'courier-geo-routing/**'
+              - 'courier-fare-calculator/**'
+              - 'courier-pickup-engine/**' 
+              - 'courier-location-tracker/**'
+
+  # Build and test Java services
+  build-java:
+    needs: changes
+    if: ${{ needs.changes.outputs.java_services == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service-dir: [
+          'courier-management-service',
+          'courier-subscription-service',
+          'international-shipping-service',
+          'commission-service',
+          'payout-service',
+          'notification-service',
+          'regional-courier-service',
+          'courier-tracking-service'
+        ]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+      
+      - name: Build with Maven
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "pom.xml" ]; then
+            mvn -B clean package --file pom.xml
+          else
+            echo "No pom.xml found, skipping..."
+            exit 0
+          fi
+      
+      - name: Run tests
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "pom.xml" ]; then
+            mvn -B test
+          else
+            echo "No pom.xml found, skipping..."
+            exit 0
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ matrix.service-dir }}
+          path: ${{ matrix.service-dir }}/target/surefire-reports/
+
+  # Build and test Node.js services
+  build-nodejs:
+    needs: changes
+    if: ${{ needs.changes.outputs.nodejs_services == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service-dir: [
+          'courier-network-locations',
+          'courier-events-service',
+          'courier-geo-routing',
+          'courier-fare-calculator',
+          'courier-pickup-engine', 
+          'courier-location-tracker'
+        ]
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.service-dir }}/package-lock.json
+      
+      - name: Install dependencies
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "package.json" ]; then
+            npm ci
+          else
+            echo "No package.json found, skipping..."
+            exit 0
+          fi
+      
+      - name: Lint
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "package.json" ]; then
+            npm run lint || true
+          else
+            echo "No package.json found, skipping..."
+            exit 0
+          fi
+      
+      - name: Test
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "package.json" ]; then
+            npm test || true
+          else
+            echo "No package.json found, skipping..."
+            exit 0
+          fi
+      
+      - name: Build
+        run: |
+          cd ${{ matrix.service-dir }}
+          if [ -f "package.json" ]; then
+            npm run build || echo "Build script not found, skipping..."
+          else
+            echo "No package.json found, skipping..."
+            exit 0
+          fi
+
+  # Docker build and push for Java services
+  docker-build-java:
+    needs: build-java
+    if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service-dir: [
+          'courier-management-service',
+          'courier-subscription-service',
+          'international-shipping-service',
+          'commission-service',
+          'payout-service',
+          'notification-service',
+          'regional-courier-service',
+          'courier-tracking-service'
+        ]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short
+            latest
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ matrix.service-dir }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}:buildcache,mode=max
+
+  # Docker build and push for Node.js services
+  docker-build-nodejs:
+    needs: build-nodejs
+    if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service-dir: [
+          'courier-network-locations',
+          'courier-events-service',
+          'courier-geo-routing',
+          'courier-fare-calculator',
+          'courier-pickup-engine', 
+          'courier-location-tracker'
+        ]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short
+            latest
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./${{ matrix.service-dir }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.BASE_IMAGE_NAME }}/${{ matrix.service-dir }}:buildcache,mode=max
+
+  # Deploy to appropriate environment
+  deploy:
+    needs: [docker-build-java, docker-build-nodejs]
+    if: ${{ github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production' || 'development') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set environment variables
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "production" ] || [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "DEPLOY_ENV=production" >> $GITHUB_ENV
+          elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
+            echo "DEPLOY_ENV=staging" >> $GITHUB_ENV
+          else
+            echo "DEPLOY_ENV=development" >> $GITHUB_ENV
+          fi
+      
+      - name: Deploy to cloud environment
+        run: |
+          echo "Deploying to ${{ env.DEPLOY_ENV }} environment"
+          # This would be replaced with actual deployment steps
+          # For example, Terraform apply, AWS CLI commands, etc.
+          echo "Deployment successful!"

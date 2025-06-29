@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-location-tracker
+  namespace: courier-services
+  labels:
+    app: courier-location-tracker
+    domain: courier-services
+spec:
+  selector:
+    app: courier-location-tracker
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  - name: websocket
+    port: 3001
+    targetPort: 3001
+    protocol: TCP
+  type: ClusterIP

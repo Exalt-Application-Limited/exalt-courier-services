@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: courier-fare-calculator
+  namespace: courier-services
+  labels:
+    app: courier-fare-calculator
+    domain: courier-services
+spec:
+  selector:
+    app: courier-fare-calculator
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+    protocol: TCP
+  type: ClusterIP
