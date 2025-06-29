@@ -1,7 +1,0 @@
-=== Testing Corporate Courier Branch app/ ===
-Corporate Courier Branch app/: 0
-0 errors
-=== Testing Courier Branch App/ ===
-Courier Branch App/: 0
-0 errors
-=== Testing branch-courier-app/ ===
