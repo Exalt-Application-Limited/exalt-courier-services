@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.aspect;
+package com.gogidix.courier.courier.aspect;
 
 import brave.Span;
 import brave.Tracer;

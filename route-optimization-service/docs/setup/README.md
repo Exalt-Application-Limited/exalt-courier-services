@@ -140,10 +140,10 @@ mvn flyway:clean
 #### Sample Data Loading
 ```bash
 # Load test route data
-mvn exec:java -Dexec.mainClass="com.exalt.courier.routing.util.TestDataLoader"
+mvn exec:java -Dexec.mainClass="com.gogidix.courier.routing.util.TestDataLoader"
 
 # Load sample road network data
-mvn exec:java -Dexec.mainClass="com.exalt.courier.routing.util.RoadNetworkLoader" -Dexec.args="sample"
+mvn exec:java -Dexec.mainClass="com.gogidix.courier.routing.util.RoadNetworkLoader" -Dexec.args="sample"
 ```
 
 ### Neo4j Setup

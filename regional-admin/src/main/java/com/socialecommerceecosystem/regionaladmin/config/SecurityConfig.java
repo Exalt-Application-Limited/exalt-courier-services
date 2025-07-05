@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.config;
+package com.gogidix.courier.regionaladmin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

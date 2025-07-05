@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.model;
+package com.gogidix.courier.courier.branch.model;
 
 public enum TaskType {
     PICKUP,

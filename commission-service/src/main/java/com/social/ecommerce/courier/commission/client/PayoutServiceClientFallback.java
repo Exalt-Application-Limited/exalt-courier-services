@@ -1,4 +1,4 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

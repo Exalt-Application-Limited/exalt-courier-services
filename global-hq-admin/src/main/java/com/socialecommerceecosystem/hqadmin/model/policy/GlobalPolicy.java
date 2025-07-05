@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.model.policy;
+package com.gogidix.courier.hqadmin.model.policy;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalRegion;
 import lombok.AllArgsConstructor;

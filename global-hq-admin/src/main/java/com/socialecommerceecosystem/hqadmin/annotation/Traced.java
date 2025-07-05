@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.annotation;
+package com.gogidix.courier.hqadmin.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

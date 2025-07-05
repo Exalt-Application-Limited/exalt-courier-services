@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.capacity;
+package com.gogidix.courier.regionaladmin.service.capacity;
 
 import com.socialecommerceecosystem.regionaladmin.model.AllocationStatus;
 import com.socialecommerceecosystem.regionaladmin.model.ResourceAllocation;

@@ -169,7 +169,7 @@ management:
 # Logback configuration
 logging:
   level:
-    com.exalt.courier.tracking: INFO
+    com.gogidix.courier.tracking: INFO
     org.springframework.kafka: WARN
     org.elasticsearch: WARN
   pattern:

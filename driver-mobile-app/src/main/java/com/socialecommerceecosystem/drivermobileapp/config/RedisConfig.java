@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.config;
+package com.gogidix.courier.drivermobileapp.config;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;

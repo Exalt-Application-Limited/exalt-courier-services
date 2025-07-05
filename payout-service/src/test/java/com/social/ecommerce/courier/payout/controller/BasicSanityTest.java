@@ -1,4 +1,4 @@
-package com.exalt.courierservices.payout.$1;
+package com.gogidix.courierservices.payout.$1;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;

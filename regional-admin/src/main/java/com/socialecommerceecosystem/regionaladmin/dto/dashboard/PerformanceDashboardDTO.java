@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.dto.dashboard;
+package com.gogidix.courier.regionaladmin.dto.dashboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

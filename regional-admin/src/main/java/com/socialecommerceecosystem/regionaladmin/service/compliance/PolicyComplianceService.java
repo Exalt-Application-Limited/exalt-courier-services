@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.compliance;
+package com.gogidix.courier.regionaladmin.service.compliance;
 
 import com.socialecommerceecosystem.regionaladmin.model.Policy;
 import com.socialecommerceecosystem.regionaladmin.model.PolicyStatus;

@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

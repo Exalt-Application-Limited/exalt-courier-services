@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.repository;
+package com.gogidix.courier.regionaladmin.repository;
 
 import com.socialecommerceecosystem.regionaladmin.model.RegionalMetrics;
 import org.springframework.data.jpa.repository.JpaRepository;

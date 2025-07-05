@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.dashboard.model;
+package com.gogidix.courier.courier.branch.dashboard.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

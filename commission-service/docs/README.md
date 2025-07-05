@@ -40,11 +40,11 @@ To use the Commission Service, follow these steps:
 
 ### Creating a Commission Application
 ```java
-import com.exalt.courier.commission.core.CommissionApplication;
-import com.exalt.courier.commission.core.SecurityConfig;
-import com.exalt.courier.commission.components.calculator.CommissionCalculator;
-import com.exalt.courier.commission.components.fee.FeeManagement;
-import com.exalt.courier.commission.components.payout.PayoutProcessing;
+import com.gogidix.courier.commission.core.CommissionApplication;
+import com.gogidix.courier.commission.core.SecurityConfig;
+import com.gogidix.courier.commission.components.calculator.CommissionCalculator;
+import com.gogidix.courier.commission.components.fee.FeeManagement;
+import com.gogidix.courier.commission.components.payout.PayoutProcessing;
 
 @SpringBootApplication
 public class CourierCommissionService extends CommissionApplication {
@@ -68,9 +68,9 @@ public class CourierCommissionService extends CommissionApplication {
 
 ### Using Commission Calculator
 ```java
-import com.exalt.courier.commission.service.CommissionCalculatorService;
-import com.exalt.courier.commission.model.Delivery;
-import com.exalt.courier.commission.model.CommissionStructure;
+import com.gogidix.courier.commission.service.CommissionCalculatorService;
+import com.gogidix.courier.commission.model.Delivery;
+import com.gogidix.courier.commission.model.CommissionStructure;
 
 @Service
 public class CommissionCalculatorService {
@@ -120,8 +120,8 @@ public class CommissionCalculatorService {
 
 ### Using Payout Processing
 ```java
-import com.exalt.courier.commission.service.PayoutService;
-import com.exalt.courier.commission.model.CommissionPayout;
+import com.gogidix.courier.commission.service.PayoutService;
+import com.gogidix.courier.commission.model.CommissionPayout;
 
 @Service
 public class PayoutService {

@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.repository;
+package com.gogidix.courier.hqadmin.repository;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalRegion;
 import org.springframework.data.jpa.repository.JpaRepository;

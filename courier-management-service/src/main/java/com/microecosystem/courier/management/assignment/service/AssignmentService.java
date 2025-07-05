@@ -1,9 +1,9 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentStatus;
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.exception.BusinessException;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentStatus;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.exception.BusinessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

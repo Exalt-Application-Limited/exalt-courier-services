@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.controller.resource;
+package com.gogidix.courier.regionaladmin.controller.resource;
 
 import com.socialecommerceecosystem.regionaladmin.service.resource.ResourceUtilizationService;
 import org.slf4j.Logger;

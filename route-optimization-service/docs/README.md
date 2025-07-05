@@ -41,12 +41,12 @@ To use the Route Optimization Service, follow these steps:
 
 ### Creating a Route Optimization Application
 ```java
-import com.exalt.courier.routing.core.RouteOptimizationApplication;
-import com.exalt.courier.routing.core.SecurityConfig;
-import com.exalt.courier.routing.components.planning.IntelligentRoutePlanning;
-import com.exalt.courier.routing.components.realtime.RealtimeRouteAdjustment;
-import com.exalt.courier.routing.components.vrp.VRPSolver;
-import com.exalt.courier.routing.components.traffic.TrafficIntegration;
+import com.gogidix.courier.routing.core.RouteOptimizationApplication;
+import com.gogidix.courier.routing.core.SecurityConfig;
+import com.gogidix.courier.routing.components.planning.IntelligentRoutePlanning;
+import com.gogidix.courier.routing.components.realtime.RealtimeRouteAdjustment;
+import com.gogidix.courier.routing.components.vrp.VRPSolver;
+import com.gogidix.courier.routing.components.traffic.TrafficIntegration;
 
 @SpringBootApplication
 public class CourierRouteOptimizationService extends RouteOptimizationApplication {
@@ -72,9 +72,9 @@ public class CourierRouteOptimizationService extends RouteOptimizationApplicatio
 
 ### Using Intelligent Route Planning
 ```java
-import com.exalt.courier.routing.service.RouteOptimizationService;
-import com.exalt.courier.routing.model.OptimizationRequest;
-import com.exalt.courier.routing.model.OptimizedRoute;
+import com.gogidix.courier.routing.service.RouteOptimizationService;
+import com.gogidix.courier.routing.model.OptimizationRequest;
+import com.gogidix.courier.routing.model.OptimizedRoute;
 
 @Service
 public class RouteOptimizationService {
@@ -168,8 +168,8 @@ public class RouteOptimizationService {
 
 ### Using Real-time Route Adjustment
 ```java
-import com.exalt.courier.routing.service.RealtimeRouteAdjustmentService;
-import com.exalt.courier.routing.model.RouteUpdate;
+import com.gogidix.courier.routing.service.RealtimeRouteAdjustmentService;
+import com.gogidix.courier.routing.model.RouteUpdate;
 
 @Service
 public class RealtimeRouteAdjustmentService {
@@ -254,8 +254,8 @@ public class RealtimeRouteAdjustmentService {
 
 ### Using VRP Solver for Complex Scenarios
 ```java
-import com.exalt.courier.routing.service.VRPSolverService;
-import com.exalt.courier.routing.model.VRPProblem;
+import com.gogidix.courier.routing.service.VRPSolverService;
+import com.gogidix.courier.routing.model.VRPProblem;
 
 @Service
 public class VRPSolverService {

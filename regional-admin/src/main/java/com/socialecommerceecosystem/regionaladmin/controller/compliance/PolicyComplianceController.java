@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.controller.compliance;
+package com.gogidix.courier.regionaladmin.controller.compliance;
 
 import com.socialecommerceecosystem.regionaladmin.service.compliance.PolicyComplianceService;
 import org.slf4j.Logger;

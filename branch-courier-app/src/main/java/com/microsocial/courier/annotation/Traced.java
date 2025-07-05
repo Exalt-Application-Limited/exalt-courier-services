@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.annotation;
+package com.gogidix.courier.courier.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

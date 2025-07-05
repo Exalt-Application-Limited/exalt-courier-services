@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.model;
+package com.gogidix.courier.regionaladmin.model;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

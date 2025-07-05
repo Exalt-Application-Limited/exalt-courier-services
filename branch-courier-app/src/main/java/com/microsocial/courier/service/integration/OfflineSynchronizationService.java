@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.service.integration;
+package com.gogidix.courier.courier.service.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsocial.courier.annotation.Traced;

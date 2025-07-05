@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.controller.capacity;
+package com.gogidix.courier.regionaladmin.controller.capacity;
 
 import com.socialecommerceecosystem.regionaladmin.service.capacity.CapacityPlanningService;
 import org.slf4j.Logger;

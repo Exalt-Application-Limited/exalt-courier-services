@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.routing;
+package com.gogidix.courier.drivermobileapp.dto.routing;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

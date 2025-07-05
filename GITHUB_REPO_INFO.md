@@ -1,8 +1,8 @@
-# exalt-courier-services
+# gogidix-courier-services
 
 ## Repository Information
 - **Domain**: courier-services
-- **GitHub URL**: https://github.com/Exalt-Application-Limited/exalt-courier-services
+- **GitHub URL**: https://github.com/Gogidix-Application-Limited/gogidix-courier-services
 - **Local Commit**: 4bfa0f7
 - **Setup Date**: 2025-06-29 15:26:04 UTC
 

@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 import com.microecosystem.courier.management.courier.model.Courier;
 import com.microecosystem.courier.management.courier.repository.CourierRepository;

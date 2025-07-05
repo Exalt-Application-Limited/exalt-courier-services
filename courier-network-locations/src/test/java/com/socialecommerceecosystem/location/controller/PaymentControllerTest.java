@@ -1,4 +1,4 @@
-package com.exalt.courier.location.controller;
+package com.gogidix.courier.location.controller;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;

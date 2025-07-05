@@ -1,4 +1,4 @@
-package com.exalt.courier.management.util;
+package com.gogidix.courier.management.util;
 
 import jakarta.persistence.*;
 import lombok.Data;

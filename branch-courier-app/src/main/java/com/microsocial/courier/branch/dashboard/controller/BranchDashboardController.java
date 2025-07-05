@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.dashboard.controller;
+package com.gogidix.courier.courier.branch.dashboard.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

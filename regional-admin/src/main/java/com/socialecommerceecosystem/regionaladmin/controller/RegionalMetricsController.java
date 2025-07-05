@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.controller;
+package com.gogidix.courier.regionaladmin.controller;
 
 import com.socialecommerceecosystem.regionaladmin.dto.RegionalMetricsDTO;
 import com.socialecommerceecosystem.regionaladmin.service.MetricsAggregationService;

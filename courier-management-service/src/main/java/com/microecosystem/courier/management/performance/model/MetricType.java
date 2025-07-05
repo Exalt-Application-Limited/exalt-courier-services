@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 /**
  * Enum representing different types of performance metrics for couriers.

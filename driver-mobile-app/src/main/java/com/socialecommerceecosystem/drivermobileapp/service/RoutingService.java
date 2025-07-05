@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service;
+package com.gogidix.courier.drivermobileapp.service;
 
 import com.socialecommerceecosystem.drivermobileapp.dto.routing.NavigationInstructionDTO;
 import com.socialecommerceecosystem.drivermobileapp.dto.routing.RouteDTO;

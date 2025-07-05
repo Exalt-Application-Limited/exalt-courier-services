@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.model;
+package com.gogidix.courier.drivermobileapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

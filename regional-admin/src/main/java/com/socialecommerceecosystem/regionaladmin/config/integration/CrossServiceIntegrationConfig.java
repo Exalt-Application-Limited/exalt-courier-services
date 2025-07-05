@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.config.integration;
+package com.gogidix.courier.regionaladmin.config.integration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

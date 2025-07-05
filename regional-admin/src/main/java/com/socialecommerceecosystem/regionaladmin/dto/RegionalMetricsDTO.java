@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.dto;
+package com.gogidix.courier.regionaladmin.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

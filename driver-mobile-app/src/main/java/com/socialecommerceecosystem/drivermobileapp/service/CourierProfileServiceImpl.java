@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service;
+package com.gogidix.courier.drivermobileapp.service;
 
 import java.util.Optional;
 import java.util.HashMap;
