@@ -1,4 +1,4 @@
-package com.exalt.courier.management.validation;
+package com.gogidix.courier.management.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

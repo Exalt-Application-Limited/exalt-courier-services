@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.controller;
+package com.gogidix.courier.courier.controller;
 
 import com.microsocial.courier.annotation.Traced;
 import com.microsocial.courier.model.dto.*;

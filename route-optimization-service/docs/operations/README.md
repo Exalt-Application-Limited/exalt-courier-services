@@ -184,7 +184,7 @@ management:
 # Logback configuration
 logging:
   level:
-    com.exalt.courier.routing: INFO
+    com.gogidix.courier.routing: INFO
     org.springframework.kafka: WARN
     org.neo4j: WARN
     com.optaplanner: INFO

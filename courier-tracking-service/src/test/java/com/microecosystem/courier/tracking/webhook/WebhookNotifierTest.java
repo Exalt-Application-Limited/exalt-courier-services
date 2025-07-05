@@ -1,7 +1,7 @@
-package com.exalt.courierservices.tracking.$1;
+package com.gogidix.courierservices.tracking.$1;
 
-import com.exalt.courierservices.tracking.dto.PackageDTO;
-import com.exalt.courierservices.tracking.model.TrackingStatus;
+import com.gogidix.courierservices.tracking.dto.PackageDTO;
+import com.gogidix.courierservices.tracking.model.TrackingStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

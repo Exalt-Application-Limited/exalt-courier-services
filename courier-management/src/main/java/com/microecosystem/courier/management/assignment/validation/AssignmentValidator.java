@@ -1,9 +1,9 @@
-package com.exalt.courier.management.assignment.validation;
+package com.gogidix.courier.management.assignment.validation;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
-import com.exalt.courier.management.assignment.model.TaskType;
-import com.exalt.courier.management.exception.BusinessException;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.model.TaskType;
+import com.gogidix.courier.management.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

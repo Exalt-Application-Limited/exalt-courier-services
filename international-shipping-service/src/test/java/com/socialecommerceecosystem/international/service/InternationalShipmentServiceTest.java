@@ -1,4 +1,4 @@
-package com.exalt.courier.international.service;
+package com.gogidix.courier.international.service;
 
 import lombok.extern.slf4j.Slf4j;
 

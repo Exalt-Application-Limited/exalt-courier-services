@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.controller;
+package com.gogidix.courier.regionaladmin.controller;
 
 import com.socialecommerceecosystem.regionaladmin.service.CrossServiceAggregationService;
 import io.swagger.v3.oas.annotations.Operation;

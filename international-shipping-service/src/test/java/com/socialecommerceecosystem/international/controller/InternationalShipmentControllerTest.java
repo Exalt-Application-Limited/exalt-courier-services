@@ -1,4 +1,4 @@
-package com.exalt.courier.international.controller;
+package com.gogidix.courier.international.controller;
 
 import lombok.extern.slf4j.Slf4j;
 

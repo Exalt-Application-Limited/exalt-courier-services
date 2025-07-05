@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.dashboard;
+package com.gogidix.courier.regionaladmin.service.dashboard;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

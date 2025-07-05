@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin;
+package com.gogidix.courier.hqadmin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

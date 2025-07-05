@@ -1,6 +1,6 @@
-package com.exalt.courier.management.courier.model;
+package com.gogidix.courier.management.courier.model;
 
-import com.exalt.courier.management.util.BaseEntity;
+import com.gogidix.courier.management.util.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

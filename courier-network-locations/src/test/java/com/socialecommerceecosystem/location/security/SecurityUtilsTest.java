@@ -1,4 +1,4 @@
-package com.exalt.courier.location.security;
+package com.gogidix.courier.location.security;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

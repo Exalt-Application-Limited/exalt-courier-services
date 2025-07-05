@@ -1,12 +1,12 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.*;
-import com.exalt.courier.commission.repository.CommissionEntryRepository;
-import com.exalt.courier.commission.repository.PartnerPaymentRepository;
-import com.exalt.courier.commission.repository.PaymentDetailsRepository;
-import com.exalt.courier.commission.service.CommissionService;
-import com.exalt.courier.commission.service.PartnerService;
-import com.exalt.courier.commission.service.PaymentService;
+import com.gogidix.courier.commission.model.*;
+import com.gogidix.courier.commission.repository.CommissionEntryRepository;
+import com.gogidix.courier.commission.repository.PartnerPaymentRepository;
+import com.gogidix.courier.commission.repository.PaymentDetailsRepository;
+import com.gogidix.courier.commission.service.CommissionService;
+import com.gogidix.courier.commission.service.PartnerService;
+import com.gogidix.courier.commission.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.PartnerPayment;
-import com.exalt.courier.commission.model.PaymentStatus;
+import com.gogidix.courier.commission.model.PartnerPayment;
+import com.gogidix.courier.commission.model.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

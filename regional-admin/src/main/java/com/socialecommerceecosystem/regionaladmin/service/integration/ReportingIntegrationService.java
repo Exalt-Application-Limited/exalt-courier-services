@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.integration;
+package com.gogidix.courier.regionaladmin.service.integration;
 
 import java.util.List;
 import java.util.Map;

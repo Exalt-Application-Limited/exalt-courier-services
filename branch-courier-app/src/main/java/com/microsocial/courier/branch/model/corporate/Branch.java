@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.model.corporate;
+package com.gogidix.courier.courier.branch.model.corporate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

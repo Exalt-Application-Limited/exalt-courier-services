@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.integration;
+package com.gogidix.courier.regionaladmin.service.integration;
 
 import com.microecosystem.courier.shared.dashboard.DashboardDataAggregationService;
 import com.microecosystem.courier.shared.dashboard.DashboardDataTransfer;

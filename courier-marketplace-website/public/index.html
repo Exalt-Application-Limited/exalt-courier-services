@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="description" content="Find reliable couriers and delivery services near you. Get instant quotes, track packages in real-time, and book delivery services with Exalt Courier Marketplace." />
+    <meta name="keywords" content="courier services, package delivery, same day delivery, express delivery, courier marketplace, shipping, Exalt" />
+    <meta name="author" content="Exalt Application Limited" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://courier.exaltapp.com/" />
+    <meta property="og:title" content="Exalt Courier Marketplace - Reliable Delivery Services" />
+    <meta property="og:description" content="Find reliable couriers and delivery services near you. Get instant quotes and track packages in real-time." />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image-courier.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://courier.exaltapp.com/" />
+    <meta property="twitter:title" content="Exalt Courier Marketplace - Reliable Delivery Services" />
+    <meta property="twitter:description" content="Find reliable couriers and delivery services near you. Get instant quotes and track packages in real-time." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/twitter-image-courier.jpg" />
+
+    <!-- Geographic Meta Tags -->
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
+    <meta name="ICBM" content="40.7128, -74.0060" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <title>Exalt Courier Marketplace - Reliable Delivery Services</title>
+    
+    <!-- Schema.org markup for courier service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Exalt Courier Marketplace",
+      "description": "Online marketplace for courier and delivery services",
+      "provider": {
+        "@type": "Organization",
+        "name": "Exalt Application Limited"
+      },
+      "serviceType": "Courier and Delivery Services",
+      "areaServed": "United States",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Delivery Service Types",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Same Day Delivery"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Express Delivery"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Standard Delivery"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "International Shipping"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://unpkg.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com;
+      img-src 'self' data: https: blob:;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self' https://api.exaltapp.com wss://api.exaltapp.com https://www.google-analytics.com https://tiles.openstreetmap.org;
+      media-src 'self';
+      object-src 'none';
+      frame-src 'self' https://www.youtube.com https://player.vimeo.com;
+      worker-src 'self' blob:;
+      child-src 'self' blob:;
+      form-action 'self';
+      base-uri 'self';
+    ">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    
+    <!-- Loading spinner for initial load -->
+    <style>
+      #initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: white;
+      }
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      .loader-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        opacity: 0.9;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <div id="initial-loader">
+      <div class="loader"></div>
+      <div class="loader-text">Loading Exalt Courier...</div>
+    </div>
+    <script>
+      // Remove loader when React app loads
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loader = document.getElementById('initial-loader');
+          if (loader) loader.style.display = 'none';
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

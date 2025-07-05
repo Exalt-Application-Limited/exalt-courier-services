@@ -1,4 +1,4 @@
-package com.exalt.courier.international.service;
+package com.gogidix.courier.international.service;
 
 import com.socialecommerceecosystem.international.client.ThirdPartyIntegrationClient;
 import com.socialecommerceecosystem.international.model.CustomsDeclaration;

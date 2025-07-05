@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp;
+package com.gogidix.courier.drivermobileapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,12 +1,12 @@
-package com.exalt.courier.management.assignment.service.impl;
+package com.gogidix.courier.management.assignment.service.impl;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
-import com.exalt.courier.management.assignment.model.Location;
-import com.exalt.courier.management.assignment.model.TaskStatus;
-import com.exalt.courier.management.assignment.repository.AssignmentTaskRepository;
-import com.exalt.courier.management.assignment.service.TaskSequencingService;
-import com.exalt.courier.management.exception.BusinessException;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.model.Location;
+import com.gogidix.courier.management.assignment.model.TaskStatus;
+import com.gogidix.courier.management.assignment.repository.AssignmentTaskRepository;
+import com.gogidix.courier.management.assignment.service.TaskSequencingService;
+import com.gogidix.courier.management.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

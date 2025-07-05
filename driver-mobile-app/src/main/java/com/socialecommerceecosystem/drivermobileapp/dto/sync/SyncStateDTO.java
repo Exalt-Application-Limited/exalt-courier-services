@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.sync;
+package com.gogidix.courier.drivermobileapp.dto.sync;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

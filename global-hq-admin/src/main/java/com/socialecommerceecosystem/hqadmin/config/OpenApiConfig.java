@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.config;
+package com.gogidix.courier.hqadmin.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

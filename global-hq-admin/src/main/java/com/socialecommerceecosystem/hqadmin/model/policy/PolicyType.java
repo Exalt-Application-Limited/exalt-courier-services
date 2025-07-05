@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.model.policy;
+package com.gogidix.courier.hqadmin.model.policy;
 
 /**
  * Enum representing the different types of policies within the courier services domain.

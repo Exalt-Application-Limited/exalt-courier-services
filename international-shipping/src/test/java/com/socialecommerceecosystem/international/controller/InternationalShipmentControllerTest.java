@@ -1,4 +1,4 @@
-package com.exalt.courier.international.controller;
+package com.gogidix.courier.international.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialecommerceecosystem.international.model.CustomsDeclaration;

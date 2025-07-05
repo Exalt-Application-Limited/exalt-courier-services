@@ -1,9 +1,9 @@
-package com.exalt.courier.management.assignment.repository;
+package com.gogidix.courier.management.assignment.repository;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
-import com.exalt.courier.management.assignment.model.TaskStatus;
-import com.exalt.courier.management.assignment.model.TaskType;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.model.TaskStatus;
+import com.gogidix.courier.management.assignment.model.TaskType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

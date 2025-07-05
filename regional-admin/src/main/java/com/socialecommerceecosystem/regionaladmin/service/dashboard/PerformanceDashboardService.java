@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.dashboard;
+package com.gogidix.courier.regionaladmin.service.dashboard;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin;
+package com.gogidix.courier.regionaladmin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

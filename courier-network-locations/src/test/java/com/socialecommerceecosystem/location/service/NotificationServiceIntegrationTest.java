@@ -1,4 +1,4 @@
-package com.exalt.courier.location.service;
+package com.gogidix.courier.location.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;

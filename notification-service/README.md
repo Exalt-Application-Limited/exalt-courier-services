@@ -1,7 +1,7 @@
 # Notification Service
 
 ## Overview
-The Notification Service manages all courier-related notifications including SMS, email, and push notifications for the Exalt courier ecosystem.
+The Notification Service manages all courier-related notifications including SMS, email, and push notifications for the Gogidix courier ecosystem.
 
 ## Features
 - Multi-channel notification delivery (SMS, Email, Push)

@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.config;
+package com.gogidix.courier.drivermobileapp.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;

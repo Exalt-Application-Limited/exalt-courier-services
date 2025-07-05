@@ -1,4 +1,4 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

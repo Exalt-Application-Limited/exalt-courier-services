@@ -1,6 +1,6 @@
-package com.exalt.courier.management.performance.dto;
+package com.gogidix.courier.management.performance.dto;
 
-import com.exalt.courier.management.performance.model.MetricType;
+import com.gogidix.courier.management.performance.model.MetricType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;

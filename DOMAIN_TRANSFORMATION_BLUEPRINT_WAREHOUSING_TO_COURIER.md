@@ -483,7 +483,7 @@ courier-service-name/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/exalt/courier/[service]/
+│   │   │   └── com/gogidix/courier/[service]/
 │   │   │       ├── [Service]Application.java
 │   │   │       ├── config/
 │   │   │       ├── controller/
@@ -514,7 +514,7 @@ courier-service-name/
         <relativePath/>
     </parent>
     
-    <groupId>com.exalt.courier</groupId>
+    <groupId>com.gogidix.courier</groupId>
     <artifactId>[service-name]</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

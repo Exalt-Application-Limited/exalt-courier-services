@@ -1,4 +1,4 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.exalt.courier.location;
+package com.gogidix.courier.location;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;

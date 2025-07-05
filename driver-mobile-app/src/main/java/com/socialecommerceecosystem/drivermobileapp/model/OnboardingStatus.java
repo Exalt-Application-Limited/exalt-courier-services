@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.model;
+package com.gogidix.courier.drivermobileapp.model;
 
 /**
  * Represents the various stages of courier onboarding process.

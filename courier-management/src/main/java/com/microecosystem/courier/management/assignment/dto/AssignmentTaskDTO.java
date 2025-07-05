@@ -1,7 +1,7 @@
-package com.exalt.courier.management.assignment.dto;
+package com.gogidix.courier.management.assignment.dto;
 
-import com.exalt.courier.management.assignment.model.TaskStatus;
-import com.exalt.courier.management.assignment.model.TaskType;
+import com.gogidix.courier.management.assignment.model.TaskStatus;
+import com.gogidix.courier.management.assignment.model.TaskType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

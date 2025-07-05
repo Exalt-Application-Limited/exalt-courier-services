@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.audit.impl;
+package com.gogidix.courier.hqadmin.service.audit.impl;
 
 import com.socialecommerceecosystem.hqadmin.model.audit.GlobalConfigurationAuditLog;
 import com.socialecommerceecosystem.hqadmin.repository.audit.GlobalConfigurationAuditLogRepository;

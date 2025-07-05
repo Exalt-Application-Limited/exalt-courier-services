@@ -1,0 +1,100 @@
+# Test Configuration for Corporate Customer Onboarding Service
+# Uses PostgreSQL for production parity and real integration testing
+
+server:
+  port: 0  # Random port for testing
+
+spring:
+  # PostgreSQL Test Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5433/corporate_onboarding_test
+    username: test_user
+    password: test_password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+
+  # JPA Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop  # Recreate schema for each test
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        generate_statistics: false
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  # Flyway Migration for Test Database
+  flyway:
+    enabled: true
+    clean-disabled: false  # Allow cleaning for tests
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+  # Test Transaction Management
+  transaction:
+    default-timeout: 30
+    rollback-on-commit-failure: true
+
+  # Application Configuration
+  application:
+    name: corporate-customer-onboarding-service-test
+
+# Logging Configuration for Tests
+logging:
+  level:
+    com.exalt.courier.corporate.customer.onboarding: DEBUG
+    org.springframework.jdbc: DEBUG
+    org.springframework.transaction: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
+    org.flyway: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Security Configuration for Tests
+security:
+  jwt:
+    secret: test-secret-key-for-corporate-onboarding-service-testing
+    expiration: 3600000  # 1 hour for tests
+
+# Integration Service URLs for Tests (Mock endpoints)
+integration:
+  services:
+    auth-service:
+      base-url: http://localhost:8081
+      enabled: false  # Disable for unit tests
+    kyc-service:
+      base-url: http://localhost:8082
+      enabled: false  # Disable for unit tests
+    notification-service:
+      base-url: http://localhost:8083
+      enabled: false  # Disable for unit tests
+    billing-service:
+      base-url: http://localhost:8084
+      enabled: false  # Disable for unit tests
+
+# Test-specific configurations
+test:
+  database:
+    cleanup-strategy: truncate  # How to clean between tests
+    seed-data: false  # Don't seed test data by default
+  
+  performance:
+    enable-metrics: true
+    slow-query-threshold: 1000  # Log queries slower than 1 second
+  
+  mock:
+    external-services: true  # Mock external service calls in tests

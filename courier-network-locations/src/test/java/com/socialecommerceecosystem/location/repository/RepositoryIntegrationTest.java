@@ -1,4 +1,4 @@
-package com.exalt.courier.location.repository;
+package com.gogidix.courier.location.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 

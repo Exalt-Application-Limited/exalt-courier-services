@@ -1,7 +1,7 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.performance.dto.PerformanceMetricDTO;
-import com.exalt.courier.management.performance.model.MetricType;
+import com.gogidix.courier.management.performance.dto.PerformanceMetricDTO;
+import com.gogidix.courier.management.performance.model.MetricType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

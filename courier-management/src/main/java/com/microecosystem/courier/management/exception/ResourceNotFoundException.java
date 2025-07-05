@@ -1,4 +1,4 @@
-package com.exalt.courier.management.exception;
+package com.gogidix.courier.management.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

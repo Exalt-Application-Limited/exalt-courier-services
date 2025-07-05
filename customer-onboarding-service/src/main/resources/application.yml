@@ -1,0 +1,178 @@
+spring:
+  application:
+    name: customer-onboarding-service
+  
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/customer_onboarding_db}
+    username: ${SPRING_DATASOURCE_USERNAME:customer_onboarding_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:customer_onboarding_password}
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    
+  cloud:
+    discovery:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8310}
+  servlet:
+    context-path: /
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.exalt.courier.customer.onboarding: INFO
+    org.springframework.cloud.openfeign: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  openapi:
+    dev-url: http://localhost:8310
+    prod-url: https://api.exaltcourier.com
+  
+  customer-onboarding:
+    default-communication-method: EMAIL
+    kyc-verification-timeout: PT24H
+    application-reference-prefix: CUST-ONB
+    auto-approve-enabled: false
+
+# Feign client configurations
+feign:
+  client:
+    config:
+      auth-service:
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: basic
+      kyc-service:
+        connectTimeout: 5000
+        readTimeout: 15000
+        loggerLevel: basic
+      document-verification:
+        connectTimeout: 5000
+        readTimeout: 20000
+        loggerLevel: basic
+      notification-service:
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: basic
+      payment-processing-service:
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: basic
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+    
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.exalt.courier.customer.onboarding: DEBUG
+    org.springframework: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+      
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+    
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.exalt.courier.customer.onboarding: WARN
+    org.springframework: WARN
+    org.hibernate: WARN
+
+---
+spring:
+  config:
+    activate:
+      on-profile: kubernetes
+      
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    
+logging:
+  level:
+    com.exalt.courier.customer.onboarding: INFO
+    org.springframework: WARN

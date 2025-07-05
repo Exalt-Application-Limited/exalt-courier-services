@@ -1,15 +1,15 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.courier.repository.CourierRepository;
-import com.exalt.courier.management.exception.BusinessException;
-import com.exalt.courier.management.exception.ResourceNotFoundException;
-import com.exalt.courier.management.performance.dto.PerformanceMetricDTO;
-import com.exalt.courier.management.performance.mapper.PerformanceMetricMapper;
-import com.exalt.courier.management.performance.model.MetricType;
-import com.exalt.courier.management.performance.model.PerformanceMetric;
-import com.exalt.courier.management.performance.repository.PerformanceMetricRepository;
-import com.exalt.courier.management.performance.service.PerformanceMetricsService;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.courier.repository.CourierRepository;
+import com.gogidix.courier.management.exception.BusinessException;
+import com.gogidix.courier.management.exception.ResourceNotFoundException;
+import com.gogidix.courier.management.performance.dto.PerformanceMetricDTO;
+import com.gogidix.courier.management.performance.mapper.PerformanceMetricMapper;
+import com.gogidix.courier.management.performance.model.MetricType;
+import com.gogidix.courier.management.performance.model.PerformanceMetric;
+import com.gogidix.courier.management.performance.repository.PerformanceMetricRepository;
+import com.gogidix.courier.management.performance.service.PerformanceMetricsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

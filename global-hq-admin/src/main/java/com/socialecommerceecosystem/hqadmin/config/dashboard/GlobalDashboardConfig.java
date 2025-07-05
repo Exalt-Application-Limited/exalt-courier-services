@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.config.dashboard;
+package com.gogidix.courier.hqadmin.config.dashboard;
 
 import com.microecosystem.courier.shared.dashboard.DashboardCommunicationService;
 import com.microecosystem.courier.shared.dashboard.DashboardDataAggregationService;

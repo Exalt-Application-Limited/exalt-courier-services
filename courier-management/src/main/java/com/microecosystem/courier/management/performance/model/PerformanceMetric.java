@@ -1,6 +1,6 @@
-package com.exalt.courier.management.performance.model;
+package com.gogidix.courier.management.performance.model;
 
-import com.exalt.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.courier.model.Courier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

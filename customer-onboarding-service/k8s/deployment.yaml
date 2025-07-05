@@ -1,0 +1,141 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-onboarding-service
+  namespace: courier-services
+  labels:
+    app: customer-onboarding-service
+    domain: courier-services
+    tier: backend
+    service-type: customer-onboarding
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: customer-onboarding-service
+  template:
+    metadata:
+      labels:
+        app: customer-onboarding-service
+        domain: courier-services
+        tier: backend
+        service-type: customer-onboarding
+    spec:
+      containers:
+      - name: customer-onboarding-service
+        image: ${DOCKER_REGISTRY}/customer-onboarding-service:${IMAGE_TAG}
+        ports:
+        - containerPort: 8310
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "kubernetes"
+        - name: SERVER_PORT
+          value: "8310"
+        - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
+          value: "http://eureka-server:8761/eureka/"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: customer-onboarding-db-secret
+              key: database-url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: customer-onboarding-db-secret
+              key: database-username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: customer-onboarding-db-secret
+              key: database-password
+        - name: AUTH_SERVICE_URL
+          value: "http://auth-service:8080"
+        - name: KYC_SERVICE_URL
+          value: "http://kyc-service:8080"
+        - name: DOCUMENT_VERIFICATION_SERVICE_URL
+          value: "http://document-verification:8080"
+        - name: NOTIFICATION_SERVICE_URL
+          value: "http://notification-service:8080"
+        - name: PAYMENT_PROCESSING_SERVICE_URL
+          value: "http://payment-processing-service:8080"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8310
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8310
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: customer-onboarding-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customer-onboarding-config
+  namespace: courier-services
+data:
+  application-kubernetes.yml: |
+    server:
+      port: 8310
+    spring:
+      application:
+        name: customer-onboarding-service
+      cloud:
+        discovery:
+          enabled: true
+    eureka:
+      client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+          defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE:http://eureka-server:8761/eureka/}
+      instance:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health,info,metrics,prometheus
+      endpoint:
+        health:
+          show-details: always
+    logging:
+      level:
+        com.exalt.courier.customer.onboarding: INFO
+        org.springframework: WARN
+        org.springframework.cloud.openfeign: DEBUG
+      pattern:
+        console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    app:
+      openapi:
+        dev-url: http://localhost:8310
+        prod-url: https://api.exaltcourier.com
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: customer-onboarding-db-secret
+  namespace: courier-services
+type: Opaque
+data:
+  database-url: ${DATABASE_URL_BASE64}
+  database-username: ${DATABASE_USERNAME_BASE64}
+  database-password: ${DATABASE_PASSWORD_BASE64}

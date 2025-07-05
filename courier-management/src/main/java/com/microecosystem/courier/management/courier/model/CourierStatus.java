@@ -1,4 +1,4 @@
-package com.exalt.courier.management.courier.model;
+package com.gogidix.courier.management.courier.model;
 
 /**
  * Represents the possible statuses of a courier.

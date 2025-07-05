@@ -1,0 +1,196 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courier-marketplace-website
+  namespace: exalt-production
+  labels:
+    app: courier-marketplace-website
+    domain: courier-services
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: courier-marketplace-website
+  template:
+    metadata:
+      labels:
+        app: courier-marketplace-website
+        domain: courier-services
+        tier: frontend
+    spec:
+      containers:
+      - name: courier-marketplace-website
+        image: exalt/courier-marketplace-website:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: REACT_APP_API_BASE_URL
+          value: "https://api.exaltcourier.com/api/v1"
+        - name: REACT_APP_COURIER_MANAGEMENT_API_URL
+          value: "https://api.exaltcourier.com/courier/api/v1"
+        - name: REACT_APP_TRACKING_SERVICE_URL
+          value: "https://api.exaltcourier.com/tracking/api/v1"
+        - name: REACT_APP_FARE_CALCULATOR_URL
+          value: "https://api.exaltcourier.com/fares/api/v1"
+        - name: REACT_APP_GEO_ROUTING_URL
+          value: "https://api.exaltcourier.com/routing/api/v1"
+        - name: REACT_APP_WEBSOCKET_URL
+          value: "wss://api.exaltcourier.com/ws"
+        - name: REACT_APP_TRACKING_WEBSOCKET_URL
+          value: "wss://api.exaltcourier.com/tracking/ws"
+        - name: REACT_APP_GOOGLE_MAPS_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: courier-marketplace-secrets
+              key: google-maps-api-key
+        - name: REACT_APP_STRIPE_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: courier-marketplace-secrets
+              key: stripe-public-key
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: courier-marketplace-nginx-config
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - courier-marketplace-website
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: courier-marketplace-nginx-config
+  namespace: exalt-production
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
+
+    events {
+        worker_connections 1024;
+        use epoll;
+        multi_accept on;
+    }
+
+    http {
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        
+        access_log /var/log/nginx/access.log main;
+
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        client_max_body_size 20M;
+
+        gzip on;
+        gzip_vary on;
+        gzip_min_length 10240;
+        gzip_proxied expired no-cache no-store private auth;
+        gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/json application/xml application/rss+xml application/javascript;
+        gzip_disable "MSIE [1-6]\.";
+
+        server {
+            listen 80;
+            server_name localhost;
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+
+            # Security headers
+            add_header X-Frame-Options "SAMEORIGIN" always;
+            add_header X-Content-Type-Options "nosniff" always;
+            add_header X-XSS-Protection "1; mode=block" always;
+            add_header Referrer-Policy "no-referrer-when-downgrade" always;
+
+            location /health {
+                access_log off;
+                add_header Content-Type text/plain;
+                return 200 "healthy\n";
+            }
+
+            location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+                expires 1y;
+                add_header Cache-Control "public, immutable";
+                access_log off;
+            }
+
+            location /service-worker.js {
+                add_header Cache-Control "no-cache, no-store, must-revalidate";
+                add_header Pragma "no-cache";
+                expires 0;
+            }
+
+            location / {
+                try_files $uri $uri/ /index.html;
+                add_header Cache-Control "no-cache, must-revalidate";
+            }
+
+            error_page 404 /404.html;
+            error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+                root /usr/share/nginx/html;
+            }
+        }
+    }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: courier-marketplace-secrets
+  namespace: exalt-production
+type: Opaque
+data:
+  # Base64 encoded values - replace with actual values
+  google-maps-api-key: eW91ci1nb29nbGUtbWFwcy1hcGkta2V5
+  stripe-public-key: cGtfdGVzdF94eHh4eHh4eHh4eHh4eA==
