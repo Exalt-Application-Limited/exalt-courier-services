@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.config;
+package com.gogidix.courier.courier.config;
 
 import feign.Logger;
 import feign.Request;

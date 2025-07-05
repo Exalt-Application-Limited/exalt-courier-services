@@ -1,7 +1,7 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.PaymentDetails;
-import com.exalt.courier.commission.model.PaymentDetailsId;
+import com.gogidix.courier.commission.model.PaymentDetails;
+import com.gogidix.courier.commission.model.PaymentDetailsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -11,7 +11,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.exalt.courier</groupId>
+    <groupId>com.gogidix.courier</groupId>
     <artifactId>branch-courier-app</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <name>Branch Courier App</name>

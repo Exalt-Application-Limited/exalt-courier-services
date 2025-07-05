@@ -1,4 +1,4 @@
-package com.exalt.courier.management.assignment.model;
+package com.gogidix.courier.management.assignment.model;
 
 /**
  * Represents the possible statuses of an assignment throughout its lifecycle.

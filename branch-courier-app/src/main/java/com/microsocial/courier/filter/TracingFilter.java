@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.filter;
+package com.gogidix.courier.courier.filter;
 
 import com.microsocial.courier.service.TracingService;
 import org.springframework.beans.factory.annotation.Autowired;

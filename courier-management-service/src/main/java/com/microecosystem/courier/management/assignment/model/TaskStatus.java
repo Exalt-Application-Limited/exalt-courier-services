@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 /**
  * Represents the possible statuses of a task throughout its lifecycle.

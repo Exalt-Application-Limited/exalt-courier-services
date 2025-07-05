@@ -1,6 +1,6 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.util.BaseEntity;
+import com.gogidix.courier.management.util.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import com.exalt.courier.management.util.Location;
+import com.gogidix.courier.management.util.Location;
 
 /**
  * Represents a task within an assignment.

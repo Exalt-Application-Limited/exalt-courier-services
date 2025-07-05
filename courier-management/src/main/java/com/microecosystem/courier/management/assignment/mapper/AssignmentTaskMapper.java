@@ -1,10 +1,10 @@
-package com.exalt.courier.management.assignment.mapper;
+package com.gogidix.courier.management.assignment.mapper;
 
-import com.exalt.courier.management.assignment.dto.AssignmentTaskDTO;
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
-import com.exalt.courier.management.assignment.repository.AssignmentRepository;
-import com.exalt.courier.management.exception.ResourceNotFoundException;
+import com.gogidix.courier.management.assignment.dto.AssignmentTaskDTO;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.repository.AssignmentRepository;
+import com.gogidix.courier.management.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

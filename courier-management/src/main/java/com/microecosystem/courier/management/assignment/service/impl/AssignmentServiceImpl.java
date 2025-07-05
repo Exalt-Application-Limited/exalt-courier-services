@@ -1,15 +1,15 @@
-package com.exalt.courier.management.assignment.service.impl;
+package com.gogidix.courier.management.assignment.service.impl;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentStatus;
-import com.exalt.courier.management.assignment.repository.AssignmentRepository;
-import com.exalt.courier.management.assignment.service.AssignmentService;
-import com.exalt.courier.management.assignment.validation.AssignmentValidator;
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.courier.model.CourierStatus;
-import com.exalt.courier.management.courier.repository.CourierRepository;
-import com.exalt.courier.management.exception.BusinessException;
-import com.exalt.courier.management.exception.ResourceNotFoundException;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentStatus;
+import com.gogidix.courier.management.assignment.repository.AssignmentRepository;
+import com.gogidix.courier.management.assignment.service.AssignmentService;
+import com.gogidix.courier.management.assignment.validation.AssignmentValidator;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.courier.model.CourierStatus;
+import com.gogidix.courier.management.courier.repository.CourierRepository;
+import com.gogidix.courier.management.exception.BusinessException;
+import com.gogidix.courier.management.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.integration;
+package com.gogidix.courier.courier.integration;
 
 import com.microsocial.courier.model.dto.*;
 import lombok.extern.slf4j.Slf4j;

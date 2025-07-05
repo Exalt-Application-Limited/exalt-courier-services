@@ -1,13 +1,13 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.exception.ResourceNotFoundException;
-import com.exalt.courier.commission.model.CommissionRule;
-import com.exalt.courier.commission.model.Partner;
-import com.exalt.courier.commission.model.PartnerType;
-import com.exalt.courier.commission.model.RateType;
-import com.exalt.courier.commission.repository.CommissionRuleRepository;
-import com.exalt.courier.commission.repository.PartnerRepository;
-import com.exalt.courier.commission.service.impl.CommissionRuleServiceImpl;
+import com.gogidix.courier.commission.exception.ResourceNotFoundException;
+import com.gogidix.courier.commission.model.CommissionRule;
+import com.gogidix.courier.commission.model.Partner;
+import com.gogidix.courier.commission.model.PartnerType;
+import com.gogidix.courier.commission.model.RateType;
+import com.gogidix.courier.commission.repository.CommissionRuleRepository;
+import com.gogidix.courier.commission.repository.PartnerRepository;
+import com.gogidix.courier.commission.service.impl.CommissionRuleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

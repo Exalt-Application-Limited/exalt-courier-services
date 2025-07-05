@@ -1,0 +1,67 @@
+{
+  "short_name": "Exalt Courier",
+  "name": "Exalt Courier Marketplace",
+  "description": "Find reliable couriers and delivery services near you",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshots/courier-search.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "label": "Courier search and booking"
+    },
+    {
+      "src": "/screenshots/package-tracking.png",
+      "type": "image/png",
+      "sizes": "1280x720",
+      "label": "Real-time package tracking"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Delivery",
+      "short_name": "Book",
+      "description": "Book a delivery service",
+      "url": "/book",
+      "icons": [{ "src": "/icons/book.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Track Package",
+      "short_name": "Track",
+      "description": "Track your package delivery",
+      "url": "/track",
+      "icons": [{ "src": "/icons/track.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Get Quote",
+      "short_name": "Quote",
+      "description": "Get instant delivery quote",
+      "url": "/quote",
+      "icons": [{ "src": "/icons/quote.png", "sizes": "192x192" }]
+    }
+  ]
+}

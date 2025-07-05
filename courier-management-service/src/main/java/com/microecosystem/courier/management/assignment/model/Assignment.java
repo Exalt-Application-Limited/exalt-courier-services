@@ -1,8 +1,8 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.util.BaseEntity;
-import com.exalt.courier.management.validation.ValidCoordinates;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.util.BaseEntity;
+import com.gogidix.courier.management.validation.ValidCoordinates;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

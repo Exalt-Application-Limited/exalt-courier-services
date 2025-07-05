@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.controller;
+package com.gogidix.courier.courier.branch.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

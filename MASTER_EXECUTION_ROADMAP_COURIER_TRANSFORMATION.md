@@ -195,8 +195,8 @@ find src/main/java -name "*.java" | head -10
 # STEP 7: Apply Warehousing Patterns to courier-shared
 
 # Create BaseEntity pattern (from warehousing success)
-cat > src/main/java/com/exalt/courier/shared/entity/BaseEntity.java << 'EOF'
-package com.exalt.courier.shared.entity;
+cat > src/main/java/com/gogidix/courier/shared/entity/BaseEntity.java << 'EOF'
+package com.gogidix.courier.shared.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -240,8 +240,8 @@ public abstract class BaseEntity {
 EOF
 
 # Create standard ResourceNotFoundException
-cat > src/main/java/com/exalt/courier/shared/exception/ResourceNotFoundException.java << 'EOF'
-package com.exalt.courier.shared.exception;
+cat > src/main/java/com/gogidix/courier/shared/exception/ResourceNotFoundException.java << 'EOF'
+package com.gogidix.courier.shared.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     
@@ -271,7 +271,7 @@ echo "=== APPLYING SYSTEMATIC FIXES ==="
 find src/main/java -name "*.java" -exec sed -i 's/UUID\.fromString(\([^)]*\)\.getId())/\1.getId()/g' {} \;
 
 # 2. Package standardization  
-find src/main/java -name "*.java" -exec sed -i 's/package com\.exalt\.warehousing/package com.exalt.courier/g' {} \;
+find src/main/java -name "*.java" -exec sed -i 's/package com\.gogidix\.warehousing/package com.gogidix.courier/g' {} \;
 
 # 3. Jakarta EE migration
 find src/main/java -name "*.java" -exec sed -i 's/javax\./jakarta./g' {} \;
@@ -369,7 +369,7 @@ mvn compile -q 2>&1 | grep -E "ERROR.*\.java" | head -10 > courier-management-in
 # STEP 12: Apply Warehousing Success Patterns
 
 # 1. Fix package declarations
-find src/main/java -name "*.java" -exec sed -i 's/package com\.exalt\.warehousing/package com.exalt.courier/g' {} \;
+find src/main/java -name "*.java" -exec sed -i 's/package com\.gogidix\.warehousing/package com.gogidix.courier/g' {} \;
 
 # 2. Fix UUID/String conversions (specific to CourierServiceImpl)
 # Pattern from warehouse-management-service success:
@@ -448,7 +448,7 @@ cd /courier-services/international-shipping
 # Apply all accumulated patterns
 
 # 1. Standard pattern application
-find src/main/java -name "*.java" -exec sed -i 's/package com\.exalt\.warehousing/package com.exalt.courier/g' {} \;
+find src/main/java -name "*.java" -exec sed -i 's/package com\.gogidix\.warehousing/package com.gogidix.courier/g' {} \;
 find src/main/java -name "*.java" -exec sed -i 's/javax\./jakarta./g' {} \;
 
 # 2. API integration standardization
