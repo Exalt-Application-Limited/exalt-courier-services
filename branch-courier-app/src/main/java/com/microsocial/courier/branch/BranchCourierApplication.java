@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch;
+package com.gogidix.courier.courier.branch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

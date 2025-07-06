@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.dashboard.impl;
+package com.gogidix.courier.hqadmin.service.dashboard.impl;
 
 import com.socialecommerceecosystem.hqadmin.config.MultiRegionConfig;
 import com.socialecommerceecosystem.hqadmin.model.policy.ApprovalStatus;

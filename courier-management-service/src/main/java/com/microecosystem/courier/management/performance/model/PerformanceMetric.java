@@ -1,6 +1,6 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.courier.model.Courier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

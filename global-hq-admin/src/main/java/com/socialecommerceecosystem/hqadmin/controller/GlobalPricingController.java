@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.controller;
+package com.gogidix.courier.hqadmin.controller;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalPricing;
 import com.socialecommerceecosystem.hqadmin.service.GlobalPricingService;

@@ -1,0 +1,54 @@
+package com.gogidix.courier.routing.event;
+
+import com.gogidix.courier.routing.model.RouteStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+/**
+ * Event published when a route's status changes.
+ * This event is consumed by other services to synchronize state.
+ * 
+ * Converted to use Lombok annotations for reduced boilerplate.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class RouteStatusChangedEvent {
+    
+    private Long routeId;
+    private RouteStatus previousStatus;
+    private RouteStatus newStatus;
+    private String courierId;
+    
+    @Builder.Default
+    private LocalDateTime timestamp = LocalDateTime.now();
+    
+    private String[] packageIds;
+    
+    /**
+     * Factory method to create a new route status changed event
+     *
+     * @param routeId the ID of the route
+     * @param previousStatus the previous status
+     * @param newStatus the new status
+     * @param courierId the ID of the courier assigned to the route
+     * @param packageIds the IDs of packages in the route
+     * @return the created event
+     */
+    public static RouteStatusChangedEvent of(Long routeId, RouteStatus previousStatus, 
+                                      RouteStatus newStatus, String courierId,
+                                      String[] packageIds) {
+        return RouteStatusChangedEvent.builder()
+                .routeId(routeId)
+                .previousStatus(previousStatus)
+                .newStatus(newStatus)
+                .courierId(courierId)
+                .packageIds(packageIds)
+                .build();
+    }
+}

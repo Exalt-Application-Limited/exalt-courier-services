@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.dashboard;
+package com.gogidix.courier.courier.branch.dashboard;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;

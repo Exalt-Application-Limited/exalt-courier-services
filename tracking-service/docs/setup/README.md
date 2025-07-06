@@ -123,10 +123,10 @@ mvn flyway:clean
 #### Sample Data Loading
 ```bash
 # Load test data
-mvn exec:java -Dexec.mainClass="com.exalt.courier.tracking.util.TestDataLoader"
+mvn exec:java -Dexec.mainClass="com.gogidix.courier.tracking.util.TestDataLoader"
 
 # Load production sample data
-mvn exec:java -Dexec.mainClass="com.exalt.courier.tracking.util.SampleDataLoader" -Dexec.args="production"
+mvn exec:java -Dexec.mainClass="com.gogidix.courier.tracking.util.SampleDataLoader" -Dexec.args="production"
 ```
 
 ### Redis Setup

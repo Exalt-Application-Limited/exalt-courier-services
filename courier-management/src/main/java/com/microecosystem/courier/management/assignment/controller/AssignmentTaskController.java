@@ -1,12 +1,12 @@
-package com.exalt.courier.management.assignment.controller;
+package com.gogidix.courier.management.assignment.controller;
 
-import com.exalt.courier.management.assignment.dto.AssignmentTaskDTO;
-import com.exalt.courier.management.assignment.mapper.AssignmentTaskMapper;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
-import com.exalt.courier.management.assignment.model.TaskStatus;
-import com.exalt.courier.management.assignment.model.TaskType;
-import com.exalt.courier.management.assignment.service.AssignmentTaskService;
-import com.exalt.courier.management.exception.ResourceNotFoundException;
+import com.gogidix.courier.management.assignment.dto.AssignmentTaskDTO;
+import com.gogidix.courier.management.assignment.mapper.AssignmentTaskMapper;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.model.TaskStatus;
+import com.gogidix.courier.management.assignment.model.TaskType;
+import com.gogidix.courier.management.assignment.service.AssignmentTaskService;
+import com.gogidix.courier.management.exception.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

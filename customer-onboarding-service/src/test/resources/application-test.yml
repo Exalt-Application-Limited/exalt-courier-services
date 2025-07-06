@@ -1,0 +1,120 @@
+spring:
+  application:
+    name: customer-onboarding-service-test
+
+  # Test database configuration
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        enable_lazy_load_no_trans: true
+        
+  # Disable cloud config for tests
+  cloud:
+    config:
+      enabled: false
+      
+  # Disable Eureka for tests
+  eureka:
+    client:
+      enabled: false
+      
+  # Security configuration for tests
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080
+          
+  # Kafka configuration for tests
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: test-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      
+  # Flyway configuration for tests
+  flyway:
+    enabled: false
+    
+# Application specific properties
+app:
+  onboarding:
+    email:
+      allowed-domains: gmail.com,yahoo.com,outlook.com,company.com,test.com
+      verification:
+        token-expiry-minutes: 60
+        
+  document:
+    storage:
+      path: /tmp/test-documents
+    max-file-size: 10485760
+    allowed-types: image/jpeg,image/png,application/pdf
+    
+  ai:
+    verification:
+      enabled: false # Disable AI for tests
+      
+  notifications:
+    enabled: false # Disable notifications for tests
+    
+# Logging configuration
+logging:
+  level:
+    com.exalt.courier.customer.onboarding: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    
+# Test profiles
+---
+spring:
+  config:
+    activate:
+      on-profile: integration-test
+      
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_onboarding_test
+    driver-class-name: org.postgresql.Driver
+    username: test_user
+    password: test_password
+    
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    
+  testcontainers:
+    enabled: true
+    
+---
+spring:
+  config:
+    activate:
+      on-profile: mock-external
+      
+# Mock external service configurations
+external:
+  services:
+    auth-service:
+      url: http://localhost:8081
+      mock: true
+    kyc-service:
+      url: http://localhost:8082
+      mock: true
+    notification-service:
+      url: http://localhost:8083
+      mock: true

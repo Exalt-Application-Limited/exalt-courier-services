@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.config.dashboard;
+package com.gogidix.courier.regionaladmin.config.dashboard;
 
 import com.microecosystem.courier.shared.dashboard.DashboardDataAggregationService;
 import com.microecosystem.courier.shared.dashboard.DashboardDataHandler;

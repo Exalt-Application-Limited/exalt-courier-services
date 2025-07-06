@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 /**
  * Represents the different types of tasks that can be part of an assignment.

@@ -1,4 +1,4 @@
-package com.exalt.courier.tracking.service;
+package com.gogidix.courier.tracking.service;
 
 import com.socialecommerceecosystem.tracking.exception.ShipmentNotFoundException;
 import com.socialecommerceecosystem.tracking.model.Shipment;

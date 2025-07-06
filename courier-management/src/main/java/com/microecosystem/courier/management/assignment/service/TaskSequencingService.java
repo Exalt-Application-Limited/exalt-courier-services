@@ -1,7 +1,7 @@
-package com.exalt.courier.management.assignment.service;
+package com.gogidix.courier.management.assignment.service;
 
-import com.exalt.courier.management.assignment.model.Assignment;
-import com.exalt.courier.management.assignment.model.AssignmentTask;
+import com.gogidix.courier.management.assignment.model.Assignment;
+import com.gogidix.courier.management.assignment.model.AssignmentTask;
 
 import java.util.List;
 

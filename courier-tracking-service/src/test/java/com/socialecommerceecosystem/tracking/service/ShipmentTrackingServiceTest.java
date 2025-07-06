@@ -1,4 +1,4 @@
-package com.exalt.courierservices.tracking.service;
+package com.gogidix.courierservices.tracking.service;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,12 +7,12 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import com.exalt.courierservices.tracking.exception.ShipmentNotFoundException;
-import com.exalt.courierservices.tracking.model.Shipment;
-import com.exalt.courierservices.tracking.model.ShipmentStatus;
-import com.exalt.courierservices.tracking.model.TrackingEvent;
-import com.exalt.courierservices.tracking.repository.ShipmentRepository;
-import com.exalt.courierservices.tracking.repository.TrackingEventRepository;
+import com.gogidix.courierservices.tracking.exception.ShipmentNotFoundException;
+import com.gogidix.courierservices.tracking.model.Shipment;
+import com.gogidix.courierservices.tracking.model.ShipmentStatus;
+import com.gogidix.courierservices.tracking.model.TrackingEvent;
+import com.gogidix.courierservices.tracking.repository.ShipmentRepository;
+import com.gogidix.courierservices.tracking.repository.TrackingEventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.impl;
+package com.gogidix.courier.regionaladmin.service.impl;
 
 import com.socialecommerceecosystem.regionaladmin.service.CrossServiceAggregationService;
 import com.socialecommerceecosystem.regionaladmin.service.MetricsAggregationService;

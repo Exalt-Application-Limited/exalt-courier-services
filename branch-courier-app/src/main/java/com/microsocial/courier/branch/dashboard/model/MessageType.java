@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.dashboard.model;
+package com.gogidix.courier.courier.branch.dashboard.model;
 
 /**
  * Enum defining different types of messages that can be exchanged between dashboards.

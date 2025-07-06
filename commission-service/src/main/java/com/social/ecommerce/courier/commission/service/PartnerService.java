@@ -1,8 +1,8 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.Partner;
-import com.exalt.courier.commission.model.PartnerStatus;
-import com.exalt.courier.commission.model.PartnerType;
+import com.gogidix.courier.commission.model.Partner;
+import com.gogidix.courier.commission.model.PartnerStatus;
+import com.gogidix.courier.commission.model.PartnerType;
 
 import java.util.List;
 

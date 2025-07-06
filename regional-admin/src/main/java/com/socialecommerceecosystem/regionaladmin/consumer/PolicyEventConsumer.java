@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.consumer;
+package com.gogidix.courier.regionaladmin.consumer;
 
 import com.socialecommerceecosystem.regionaladmin.service.PolicySyncService;
 import org.slf4j.Logger;

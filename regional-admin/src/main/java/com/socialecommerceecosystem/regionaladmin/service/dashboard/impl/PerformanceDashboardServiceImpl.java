@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.dashboard.impl;
+package com.gogidix.courier.regionaladmin.service.dashboard.impl;
 
 import com.socialecommerceecosystem.regionaladmin.model.RegionalMetrics;
 import com.socialecommerceecosystem.regionaladmin.repository.RegionalMetricsRepository;

@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.client.tracking;
+package com.gogidix.courier.drivermobileapp.client.tracking;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

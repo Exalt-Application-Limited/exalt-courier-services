@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.dto.policy;
+package com.gogidix.courier.hqadmin.dto.policy;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

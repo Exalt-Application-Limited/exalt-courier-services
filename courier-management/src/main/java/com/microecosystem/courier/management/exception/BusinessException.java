@@ -1,4 +1,4 @@
-package com.exalt.courier.management.exception;
+package com.gogidix.courier.management.exception;
 
 /**
  * Exception for business rule violations.

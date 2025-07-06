@@ -1,5 +1,5 @@
 import java.util.Map;
-package com.exalt.courierservices.tracking.api;
+package com.gogidix.courierservices.tracking.api;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.exalt.courierservices.tracking.model.Shipment;
-import com.exalt.courierservices.tracking.model.ShipmentStatus;
-import com.exalt.courierservices.tracking.model.TrackingEvent;
-import com.exalt.courierservices.tracking.service.ShipmentTrackingService;
+import com.gogidix.courierservices.tracking.model.Shipment;
+import com.gogidix.courierservices.tracking.model.ShipmentStatus;
+import com.gogidix.courierservices.tracking.model.TrackingEvent;
+import com.gogidix.courierservices.tracking.service.ShipmentTrackingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

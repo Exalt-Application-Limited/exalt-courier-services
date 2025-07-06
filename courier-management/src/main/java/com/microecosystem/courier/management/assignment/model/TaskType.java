@@ -1,4 +1,4 @@
-package com.exalt.courier.management.assignment.model;
+package com.gogidix.courier.management.assignment.model;
 
 /**
  * Represents the different types of tasks that can be part of an assignment.

@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.repository;
+package com.gogidix.courier.courier.branch.repository;
 
 import com.microsocial.courier.branch.model.corporate.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;

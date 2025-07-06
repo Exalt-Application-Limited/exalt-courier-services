@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.service.integration;
+package com.gogidix.courier.courier.service.integration;
 
 import com.microsocial.courier.annotation.Traced;
 import com.microsocial.courier.integration.CourierManagementClient;

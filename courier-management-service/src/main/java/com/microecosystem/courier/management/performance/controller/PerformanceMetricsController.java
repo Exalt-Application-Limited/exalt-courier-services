@@ -1,8 +1,8 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
-import com.exalt.courier.management.performance.dto.PerformanceMetricDTO;
-import com.exalt.courier.management.performance.model.MetricType;
-import com.exalt.courier.management.performance.service.PerformanceMetricsService;
+import com.gogidix.courier.management.performance.dto.PerformanceMetricDTO;
+import com.gogidix.courier.management.performance.model.MetricType;
+import com.gogidix.courier.management.performance.service.PerformanceMetricsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

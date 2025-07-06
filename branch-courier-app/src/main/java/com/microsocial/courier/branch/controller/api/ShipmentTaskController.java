@@ -1,4 +1,4 @@
-package com.exalt.courier.courier.branch.controller.api;
+package com.gogidix.courier.courier.branch.controller.api;
 
 import com.microsocial.courier.branch.model.ShipmentTask;
 import com.microsocial.courier.branch.model.TaskStatus;

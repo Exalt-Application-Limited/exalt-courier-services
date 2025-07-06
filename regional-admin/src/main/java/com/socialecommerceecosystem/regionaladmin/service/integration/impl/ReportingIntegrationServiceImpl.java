@@ -1,4 +1,4 @@
-package com.exalt.courier.regionaladmin.service.integration.impl;
+package com.gogidix.courier.regionaladmin.service.integration.impl;
 
 import com.socialecommerceecosystem.regionaladmin.service.integration.ReportingIntegrationService;
 import lombok.RequiredArgsConstructor;

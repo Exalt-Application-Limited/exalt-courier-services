@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microecosystem.courier.management.performance.dto.PerformanceMetricDTO;

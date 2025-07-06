@@ -1,13 +1,13 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.CommissionRule;
-import com.exalt.courier.commission.model.CommissionStatus;
-import com.exalt.courier.commission.model.Partner;
-import com.exalt.courier.commission.model.PartnerType;
-import com.exalt.courier.commission.model.RateType;
-import com.exalt.courier.commission.repository.CommissionRuleRepository;
-import com.exalt.courier.commission.service.CommissionRuleService;
-import com.exalt.courier.commission.service.PartnerService;
+import com.gogidix.courier.commission.model.CommissionRule;
+import com.gogidix.courier.commission.model.CommissionStatus;
+import com.gogidix.courier.commission.model.Partner;
+import com.gogidix.courier.commission.model.PartnerType;
+import com.gogidix.courier.commission.model.RateType;
+import com.gogidix.courier.commission.repository.CommissionRuleRepository;
+import com.gogidix.courier.commission.service.CommissionRuleService;
+import com.gogidix.courier.commission.service.PartnerService;
 // import com.socialecommerceecosystem.utils.money.MoneyUtils; // TODO: Add shared money utils
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

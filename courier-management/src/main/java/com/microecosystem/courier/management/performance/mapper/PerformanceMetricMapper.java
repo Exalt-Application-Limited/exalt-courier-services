@@ -1,8 +1,8 @@
-package com.exalt.courier.management.performance.mapper;
+package com.gogidix.courier.management.performance.mapper;
 
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.performance.dto.PerformanceMetricDTO;
-import com.exalt.courier.management.performance.model.PerformanceMetric;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.performance.dto.PerformanceMetricDTO;
+import com.gogidix.courier.management.performance.model.PerformanceMetric;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

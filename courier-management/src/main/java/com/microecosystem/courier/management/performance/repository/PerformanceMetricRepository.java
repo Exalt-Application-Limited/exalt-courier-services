@@ -1,8 +1,8 @@
-package com.exalt.courier.management.performance.repository;
+package com.gogidix.courier.management.performance.repository;
 
-import com.exalt.courier.management.courier.model.Courier;
-import com.exalt.courier.management.performance.model.MetricType;
-import com.exalt.courier.management.performance.model.PerformanceMetric;
+import com.gogidix.courier.management.courier.model.Courier;
+import com.gogidix.courier.management.performance.model.MetricType;
+import com.gogidix.courier.management.performance.model.PerformanceMetric;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

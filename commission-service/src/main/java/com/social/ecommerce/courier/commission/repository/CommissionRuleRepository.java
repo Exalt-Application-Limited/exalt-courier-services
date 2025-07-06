@@ -1,8 +1,8 @@
-package com.exalt.courierservices.commission.$1;
+package com.gogidix.courierservices.commission.$1;
 
-import com.exalt.courier.commission.model.CommissionRule;
-import com.exalt.courier.commission.model.CommissionStatus;
-import com.exalt.courier.commission.model.PartnerType;
+import com.gogidix.courier.commission.model.CommissionRule;
+import com.gogidix.courier.commission.model.CommissionStatus;
+import com.gogidix.courier.commission.model.PartnerType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

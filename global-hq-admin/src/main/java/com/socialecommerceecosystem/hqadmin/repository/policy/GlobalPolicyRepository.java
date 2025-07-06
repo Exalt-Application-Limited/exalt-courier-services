@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.repository.policy;
+package com.gogidix.courier.hqadmin.repository.policy;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalRegion;
 import com.socialecommerceecosystem.hqadmin.model.policy.ApprovalStatus;

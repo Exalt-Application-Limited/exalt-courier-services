@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.tracking;
+package com.gogidix.courier.drivermobileapp.dto.tracking;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

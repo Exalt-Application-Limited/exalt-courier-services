@@ -1,4 +1,4 @@
-package com.exalt.courierservices.management.$1;
+package com.gogidix.courierservices.management.$1;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.DecimalMax;

@@ -1,4 +1,4 @@
-package com.exalt.courier.management.performance.model;
+package com.gogidix.courier.management.performance.model;
 
 /**
  * Enum representing different types of performance metrics for couriers.

@@ -41,12 +41,12 @@ To use the Tracking Service, follow these steps:
 
 ### Creating a Tracking Application
 ```java
-import com.exalt.courier.tracking.core.TrackingApplication;
-import com.exalt.courier.tracking.core.SecurityConfig;
-import com.exalt.courier.tracking.components.realtime.RealtimeTracking;
-import com.exalt.courier.tracking.components.status.StatusManagement;
-import com.exalt.courier.tracking.components.delivery.DeliveryConfirmation;
-import com.exalt.courier.tracking.components.notification.NotificationEngine;
+import com.gogidix.courier.tracking.core.TrackingApplication;
+import com.gogidix.courier.tracking.core.SecurityConfig;
+import com.gogidix.courier.tracking.components.realtime.RealtimeTracking;
+import com.gogidix.courier.tracking.components.status.StatusManagement;
+import com.gogidix.courier.tracking.components.delivery.DeliveryConfirmation;
+import com.gogidix.courier.tracking.components.notification.NotificationEngine;
 
 @SpringBootApplication
 public class CourierTrackingService extends TrackingApplication {
@@ -72,9 +72,9 @@ public class CourierTrackingService extends TrackingApplication {
 
 ### Using Real-time Tracking
 ```java
-import com.exalt.courier.tracking.service.RealtimeTrackingService;
-import com.exalt.courier.tracking.model.TrackingUpdate;
-import com.exalt.courier.tracking.model.GpsLocation;
+import com.gogidix.courier.tracking.service.RealtimeTrackingService;
+import com.gogidix.courier.tracking.model.TrackingUpdate;
+import com.gogidix.courier.tracking.model.GpsLocation;
 
 @Service
 public class RealtimeTrackingService {
@@ -138,8 +138,8 @@ public class RealtimeTrackingService {
 
 ### Using Delivery Confirmation
 ```java
-import com.exalt.courier.tracking.service.DeliveryConfirmationService;
-import com.exalt.courier.tracking.model.DeliveryProof;
+import com.gogidix.courier.tracking.service.DeliveryConfirmationService;
+import com.gogidix.courier.tracking.model.DeliveryProof;
 
 @Service
 public class DeliveryConfirmationService {
@@ -200,8 +200,8 @@ public class DeliveryConfirmationService {
 
 ### Using Status Management
 ```java
-import com.exalt.courier.tracking.service.StatusManagementService;
-import com.exalt.courier.tracking.model.StatusTransition;
+import com.gogidix.courier.tracking.service.StatusManagementService;
+import com.gogidix.courier.tracking.model.StatusTransition;
 
 @Service
 public class StatusManagementService {
