@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.controller;
+package com.gogidix.courier.courier.drivermobileapp.controller;
 
 import com.socialecommerceecosystem.drivermobileapp.exception.ResourceNotFoundException;
 import com.socialecommerceecosystem.drivermobileapp.model.AccountStatus;

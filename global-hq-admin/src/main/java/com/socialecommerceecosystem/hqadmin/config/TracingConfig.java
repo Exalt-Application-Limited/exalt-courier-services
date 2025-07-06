@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.config;
+package com.gogidix.courier.courier.hqadmin.config;
 
 import brave.baggage.BaggageField;
 import brave.baggage.CorrelationScopeConfig;

@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.reporting;
+package com.gogidix.courier.courier.hqadmin.service.reporting;
 
 import com.socialecommerceecosystem.hqadmin.model.reporting.AdvancedReport;
 

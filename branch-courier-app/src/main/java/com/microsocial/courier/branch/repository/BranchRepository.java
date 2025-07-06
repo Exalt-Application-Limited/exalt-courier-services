@@ -1,6 +1,6 @@
-package com.gogidix.courier.courier.branch.repository;
+package com.gogidix.courier.branch.repository;
 
-import com.microsocial.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.model.corporate.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

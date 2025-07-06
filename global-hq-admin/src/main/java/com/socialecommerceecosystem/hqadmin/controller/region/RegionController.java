@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.controller.region;
+package com.gogidix.courier.courier.hqadmin.controller.region;
 
 import com.socialecommerceecosystem.hqadmin.config.MultiRegionConfig;
 import com.socialecommerceecosystem.hqadmin.model.policy.GlobalPolicy;

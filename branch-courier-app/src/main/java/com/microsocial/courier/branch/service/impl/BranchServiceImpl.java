@@ -1,8 +1,8 @@
-package com.gogidix.courier.courier.branch.service.impl;
+package com.gogidix.courier.branch.service.impl;
 
-import com.microsocial.courier.branch.model.corporate.Branch;
-import com.microsocial.courier.branch.repository.BranchRepository;
-import com.microsocial.courier.branch.service.BranchService;
+import com.gogidix.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.repository.BranchRepository;
+import com.gogidix.courier.branch.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

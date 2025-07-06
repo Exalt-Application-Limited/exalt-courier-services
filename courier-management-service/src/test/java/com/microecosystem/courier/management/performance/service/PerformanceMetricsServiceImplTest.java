@@ -1,4 +1,4 @@
-package com.gogidix.courierservices.management.$1;
+package com.gogidix.courier.management.assignment.service;
 
 import com.microecosystem.courier.management.courier.model.Courier;
 import com.microecosystem.courier.management.courier.repository.CourierRepository;

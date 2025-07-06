@@ -1,9 +1,9 @@
-package com.gogidix.courier.courier.aspect;
+package com.gogidix.courier.aspect;
 
 import brave.Span;
 import brave.Tracer;
-import com.microsocial.courier.annotation.Traced;
-import com.microsocial.courier.service.TracingService;
+import com.gogidix.courier.annotation.Traced;
+import com.gogidix.courier.service.TracingService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -33,7 +33,7 @@ public class TracingAspect {
     /**
      * Creates a span for each service method invocation
      */
-    @Around("execution(* com.microsocial.courier.service..*.*(..)) && !execution(* com.microsocial.courier.service.TracingService.*(..))")
+    @Around("execution(* com.gogidix.courier.service..*.*(..)) && !execution(* com.gogidix.courier.service.TracingService.*(..))")
     public Object traceServiceMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         // Get method signature
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -76,7 +76,7 @@ public class TracingAspect {
     /**
      * Creates a span for methods annotated with @Traced
      */
-    @Around("@annotation(com.microsocial.courier.annotation.Traced)")
+    @Around("@annotation(com.gogidix.courier.annotation.Traced)")
     public Object traceAnnotatedMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         // Get method signature and annotation
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

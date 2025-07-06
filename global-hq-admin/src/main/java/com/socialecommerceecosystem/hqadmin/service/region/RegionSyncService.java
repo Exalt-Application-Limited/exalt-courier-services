@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.region;
+package com.gogidix.courier.courier.hqadmin.service.region;
 
 import com.socialecommerceecosystem.hqadmin.model.policy.GlobalPolicy;
 

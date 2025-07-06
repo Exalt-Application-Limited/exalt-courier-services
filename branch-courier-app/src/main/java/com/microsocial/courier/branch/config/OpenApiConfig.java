@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.config;
+package com.gogidix.courier.branch.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

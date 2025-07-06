@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.repository.audit;
+package com.gogidix.courier.courier.hqadmin.repository.audit;
 
 import com.socialecommerceecosystem.hqadmin.model.audit.GlobalConfigurationAuditLog;
 import org.springframework.data.domain.Page;

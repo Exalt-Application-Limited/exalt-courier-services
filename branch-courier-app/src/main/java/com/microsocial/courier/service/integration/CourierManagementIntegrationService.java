@@ -1,9 +1,9 @@
-package com.gogidix.courier.courier.service.integration;
+package com.gogidix.courier.service.integration;
 
-import com.microsocial.courier.annotation.Traced;
-import com.microsocial.courier.integration.CourierManagementClient;
-import com.microsocial.courier.model.dto.*;
-import com.microsocial.courier.service.TracingService;
+import com.gogidix.courier.annotation.Traced;
+import com.gogidix.courier.integration.CourierManagementClient;
+import com.gogidix.courier.model.dto.*;
+import com.gogidix.courier.service.TracingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;

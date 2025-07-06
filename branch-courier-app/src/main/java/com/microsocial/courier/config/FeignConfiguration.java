@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.config;
+package com.gogidix.courier.config;
 
 import feign.Logger;
 import feign.Request;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Configuration
-@EnableFeignClients(basePackages = "com.microsocial.courier.integration")
+@EnableFeignClients(basePackages = "com.gogidix.courier.integration")
 public class FeignConfiguration {
 
     @Value("${branch-courier-app.courier-management.integration.connect-timeout-seconds:5}")

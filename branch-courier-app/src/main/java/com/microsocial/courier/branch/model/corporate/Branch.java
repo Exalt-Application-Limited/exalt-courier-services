@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.model.corporate;
+package com.gogidix.courier.branch.model.corporate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.microsocial.courier.branch.model.CourierAssignment;
+import com.gogidix.courier.branch.model.CourierAssignment;
 
 @Entity
 @Table(name = "branches")

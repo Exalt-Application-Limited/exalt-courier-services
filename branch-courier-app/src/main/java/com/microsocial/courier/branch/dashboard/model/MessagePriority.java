@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard.model;
+package com.gogidix.courier.branch.dashboard.model;
 
 /**
  * Enum defining different priority levels for dashboard messages.

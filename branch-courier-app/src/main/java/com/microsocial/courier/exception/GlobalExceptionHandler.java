@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.exception;
+package com.gogidix.courier.exception;
 
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;

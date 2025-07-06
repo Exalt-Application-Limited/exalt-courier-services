@@ -1,8 +1,8 @@
-package com.gogidix.courier.courier.branch.service;
+package com.gogidix.courier.branch.service;
 
-import com.microsocial.courier.branch.model.AssignmentStatus;
-import com.microsocial.courier.branch.model.CourierAssignment;
-import com.microsocial.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.model.AssignmentStatus;
+import com.gogidix.courier.branch.model.CourierAssignment;
+import com.gogidix.courier.branch.model.corporate.Branch;
 
 import java.time.LocalDateTime;
 import java.util.List;

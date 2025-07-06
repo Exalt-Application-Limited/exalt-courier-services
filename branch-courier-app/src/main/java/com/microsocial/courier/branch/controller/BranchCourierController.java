@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.controller;
+package com.gogidix.courier.branch.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.microsocial.courier.branch.dashboard.model.DeliveryMetrics;
-import com.microsocial.courier.branch.dashboard.model.PerformanceMetrics;
-import com.microsocial.courier.branch.dashboard.model.ResourceMetrics;
+import com.gogidix.courier.branch.dashboard.model.DeliveryMetrics;
+import com.gogidix.courier.branch.dashboard.model.PerformanceMetrics;
+import com.gogidix.courier.branch.dashboard.model.ResourceMetrics;
 
 import java.util.ArrayList;
 import java.util.HashMap;

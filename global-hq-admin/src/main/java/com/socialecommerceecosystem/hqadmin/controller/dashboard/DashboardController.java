@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.controller.dashboard;
+package com.gogidix.courier.courier.hqadmin.controller.dashboard;
 
 import com.socialecommerceecosystem.hqadmin.service.dashboard.DashboardService;
 import com.socialecommerceecosystem.hqadmin.service.dashboard.DashboardService.HealthStatus;

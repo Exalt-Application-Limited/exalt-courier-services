@@ -1,7 +1,7 @@
 package com.gogidix.courier.corporate.customer.onboarding.model;
 
 import com.gogidix.courier.corporate.customer.onboarding.enums.*;
-import com.gogidix.shared.model.BaseEntity;
+import com.gogidix.ecosystem.shared.model.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -168,6 +168,9 @@ public class CorporateOnboardingApplication extends BaseEntity {
     @Column(name = "application_status", nullable = false, length = 30)
     private CorporateOnboardingStatus applicationStatus;
 
+    @Column(name = "contract_terms", columnDefinition = "TEXT")
+    private String contractTerms;
+
     @Size(max = 50, message = "KYB verification ID must not exceed 50 characters")
     @Column(name = "kyb_verification_id", length = 50)
     private String kybVerificationId;
@@ -237,6 +240,9 @@ public class CorporateOnboardingApplication extends BaseEntity {
     @Size(max = 1000, message = "Rejection reason must not exceed 1000 characters")
     @Column(name = "rejection_reason", length = 1000)
     private String rejectionReason;
+
+    @Column(name = "volume_discount", precision = 5, scale = 2)
+    private Double volumeDiscount;
 
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CorporateApplicationStatusHistory> statusHistory;

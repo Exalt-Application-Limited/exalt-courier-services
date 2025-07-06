@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service;
+package com.gogidix.courier.courier.drivermobileapp.service;
 
 import com.socialecommerceecosystem.drivermobileapp.dto.tracking.DeliveryConfirmationDTO;
 import com.socialecommerceecosystem.drivermobileapp.dto.tracking.TrackingEventDTO;

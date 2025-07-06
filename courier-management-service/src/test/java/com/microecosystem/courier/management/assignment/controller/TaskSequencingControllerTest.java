@@ -1,4 +1,4 @@
-package com.gogidix.courierservices.management.$1;
+package com.gogidix.courier.management.assignment.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microecosystem.courier.management.assignment.dto.AssignmentTaskDTO;

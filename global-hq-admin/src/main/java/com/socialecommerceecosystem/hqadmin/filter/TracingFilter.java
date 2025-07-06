@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.filter;
+package com.gogidix.courier.courier.hqadmin.filter;
 
 import com.socialecommerceecosystem.hqadmin.service.TracingService;
 import org.springframework.beans.factory.annotation.Autowired;

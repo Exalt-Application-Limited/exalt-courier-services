@@ -1,8 +1,8 @@
-package com.gogidix.courier.courier.branch.controller.api;
+package com.gogidix.courier.branch.controller.api;
 
-import com.microsocial.courier.branch.model.Courier;
-import com.microsocial.courier.branch.model.CourierStatus;
-import com.microsocial.courier.branch.service.CourierService;
+import com.gogidix.courier.branch.model.Courier;
+import com.gogidix.courier.branch.model.CourierStatus;
+import com.gogidix.courier.branch.service.CourierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

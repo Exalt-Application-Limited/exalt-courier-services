@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.client.routing;
+package com.gogidix.courier.courier.drivermobileapp.client.routing;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,11 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.microsocial.courier.branch.dashboard.model.BranchMetricsData;
-import com.microsocial.courier.branch.dashboard.model.DashboardMessage;
+import com.gogidix.courier.branch.dashboard.model.BranchMetricsData;
+import com.gogidix.courier.branch.dashboard.model.DashboardMessage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

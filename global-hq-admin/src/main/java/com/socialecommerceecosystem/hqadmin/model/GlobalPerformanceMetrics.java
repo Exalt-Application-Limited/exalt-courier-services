@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.model;
+package com.gogidix.courier.courier.hqadmin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard.controller;
+package com.gogidix.courier.branch.dashboard.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.microsocial.courier.branch.dashboard.BranchDashboardCommunicationHandler;
-import com.microsocial.courier.branch.dashboard.BranchMetricsDataProvider;
-import com.microsocial.courier.branch.dashboard.model.BranchMetricsData;
-import com.microsocial.courier.branch.dashboard.model.DashboardMessage;
-import com.microsocial.courier.branch.dashboard.model.MessagePriority;
-import com.microsocial.courier.branch.dashboard.model.MessageType;
+import com.gogidix.courier.branch.dashboard.BranchDashboardCommunicationHandler;
+import com.gogidix.courier.branch.dashboard.BranchMetricsDataProvider;
+import com.gogidix.courier.branch.dashboard.model.BranchMetricsData;
+import com.gogidix.courier.branch.dashboard.model.DashboardMessage;
+import com.gogidix.courier.branch.dashboard.model.MessagePriority;
+import com.gogidix.courier.branch.dashboard.model.MessageType;
 
 import java.util.HashMap;
 import java.util.Map;

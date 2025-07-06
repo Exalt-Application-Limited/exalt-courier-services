@@ -1,6 +1,6 @@
-package com.gogidix.courier.courier.integration;
+package com.gogidix.courier.integration;
 
-import com.microsocial.courier.model.dto.*;
+import com.gogidix.courier.model.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

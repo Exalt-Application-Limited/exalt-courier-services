@@ -1,9 +1,9 @@
-package com.gogidix.courier.courier.branch.controller.api;
+package com.gogidix.courier.branch.controller.api;
 
-import com.microsocial.courier.branch.model.ShipmentTask;
-import com.microsocial.courier.branch.model.TaskStatus;
-import com.microsocial.courier.branch.model.TaskType;
-import com.microsocial.courier.branch.service.ShipmentTaskService;
+import com.gogidix.courier.branch.model.ShipmentTask;
+import com.gogidix.courier.branch.model.TaskStatus;
+import com.gogidix.courier.branch.model.TaskType;
+import com.gogidix.courier.branch.service.ShipmentTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;

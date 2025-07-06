@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

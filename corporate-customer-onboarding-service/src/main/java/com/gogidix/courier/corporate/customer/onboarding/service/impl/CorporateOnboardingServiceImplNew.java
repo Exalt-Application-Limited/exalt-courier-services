@@ -5,8 +5,8 @@ import com.gogidix.courier.corporate.customer.onboarding.enums.CorporateOnboardi
 import com.gogidix.courier.corporate.customer.onboarding.model.CorporateOnboardingApplication;
 import com.gogidix.courier.corporate.customer.onboarding.repository.CorporateOnboardingApplicationRepository;
 import com.gogidix.courier.corporate.customer.onboarding.service.CorporateOnboardingService;
-import com.gogidix.shared.exceptions.ResourceNotFoundException;
-import com.gogidix.shared.exceptions.ValidationException;
+import com.gogidix.ecosystem.shared.exceptions.ResourceNotFoundException;
+import com.gogidix.ecosystem.shared.exceptions.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

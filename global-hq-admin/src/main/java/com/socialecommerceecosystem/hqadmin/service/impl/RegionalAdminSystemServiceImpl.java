@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.impl;
+package com.gogidix.courier.courier.hqadmin.service.impl;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalRegion;
 import com.socialecommerceecosystem.hqadmin.model.RegionalAdminSystem;

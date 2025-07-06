@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.controller;
+package com.gogidix.courier.courier.hqadmin.controller;
 
 import com.socialecommerceecosystem.hqadmin.model.GlobalSettings;
 import com.socialecommerceecosystem.hqadmin.service.GlobalSettingsService;

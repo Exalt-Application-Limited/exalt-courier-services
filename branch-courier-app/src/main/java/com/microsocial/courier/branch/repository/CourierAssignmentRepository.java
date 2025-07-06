@@ -1,8 +1,8 @@
-package com.gogidix.courier.courier.branch.repository;
+package com.gogidix.courier.branch.repository;
 
-import com.microsocial.courier.branch.model.AssignmentStatus;
-import com.microsocial.courier.branch.model.CourierAssignment;
-import com.microsocial.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.model.AssignmentStatus;
+import com.gogidix.courier.branch.model.CourierAssignment;
+import com.gogidix.courier.branch.model.corporate.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

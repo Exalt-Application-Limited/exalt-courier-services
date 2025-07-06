@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service.sync;
+package com.gogidix.courier.courier.drivermobileapp.service.sync;
 
 import com.socialecommerceecosystem.drivermobileapp.dto.assignment.AssignmentDTO;
 import com.socialecommerceecosystem.drivermobileapp.dto.assignment.OfflineSyncRequestDTO;

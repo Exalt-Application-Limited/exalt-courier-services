@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsocial.courier.branch.dashboard.model.DashboardMessage;
-import com.microsocial.courier.branch.dashboard.model.MessageType;
+import com.gogidix.courier.branch.dashboard.model.DashboardMessage;
+import com.gogidix.courier.branch.dashboard.model.MessageType;
 
 import java.util.concurrent.CompletableFuture;
 

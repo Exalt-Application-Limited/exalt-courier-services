@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.tracking;
+package com.gogidix.courier.courier.drivermobileapp.dto.tracking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

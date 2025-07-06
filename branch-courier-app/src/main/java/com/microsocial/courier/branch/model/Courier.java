@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.model;
+package com.gogidix.courier.branch.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

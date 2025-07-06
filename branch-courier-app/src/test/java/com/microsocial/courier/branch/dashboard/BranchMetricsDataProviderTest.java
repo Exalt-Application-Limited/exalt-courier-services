@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,10 +17,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.SettableListenableFuture;
 
-import com.microsocial.courier.branch.dashboard.model.BranchMetricsData;
-import com.microsocial.courier.branch.dashboard.model.DeliveryMetrics;
-import com.microsocial.courier.branch.dashboard.model.PerformanceMetrics;
-import com.microsocial.courier.branch.dashboard.model.ResourceMetrics;
+import com.gogidix.courier.branch.dashboard.model.BranchMetricsData;
+import com.gogidix.courier.branch.dashboard.model.DeliveryMetrics;
+import com.gogidix.courier.branch.dashboard.model.PerformanceMetrics;
+import com.gogidix.courier.branch.dashboard.model.ResourceMetrics;
 
 import java.util.concurrent.CompletableFuture;
 

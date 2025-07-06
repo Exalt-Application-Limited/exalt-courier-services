@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -17,9 +17,9 @@ import org.springframework.kafka.support.SendResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsocial.courier.branch.dashboard.model.DashboardMessage;
-import com.microsocial.courier.branch.dashboard.model.MessagePriority;
-import com.microsocial.courier.branch.dashboard.model.MessageType;
+import com.gogidix.courier.branch.dashboard.model.DashboardMessage;
+import com.gogidix.courier.branch.dashboard.model.MessagePriority;
+import com.gogidix.courier.branch.dashboard.model.MessageType;
 
 import java.util.concurrent.CompletableFuture;
 

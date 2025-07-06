@@ -49,11 +49,11 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
 
     @Override
     public CorporateOnboardingApplicationResponse createApplication(CreateCorporateOnboardingApplicationRequest request) {
-        log.info("Creating corporate onboarding application for business: {}", request.businessName());
+        log.info("Creating corporate onboarding application for business: {}", request.companyName());
         
         // Check if corporate application already exists
         if (applicationRepository.existsByBusinessEmailOrBusinessRegistrationNumber(
-                request.businessEmail(), request.businessRegistrationNumber())) {
+                request.companyEmail(), request.companyRegistrationNumber())) {
             throw new CorporateOnboardingException(
                 "A corporate application already exists for this business email or registration number");
         }
@@ -61,24 +61,24 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
         // Create new corporate application
         CorporateOnboardingApplication application = CorporateOnboardingApplication.builder()
                 .applicationReferenceId(generateApplicationReferenceId())
-                .businessName(request.businessName())
+                .companyName(request.companyName())
                 .businessType(request.businessType())
-                .industryType(request.industryType())
-                .businessEmail(request.businessEmail())
-                .businessPhone(request.businessPhone())
-                .businessRegistrationNumber(request.businessRegistrationNumber())
+                .industrySector(request.industrySector())
+                .companyEmail(request.companyEmail())
+                .companyPhone(request.companyPhone())
+                .companyRegistrationNumber(request.companyRegistrationNumber())
                 .taxIdentificationNumber(request.taxIdentificationNumber())
-                .businessAddress(request.businessAddress())
+                .businessAddressLine1(request.businessAddressLine1())
                 .billingAddress(request.billingAddress())
                 .primaryContactFirstName(request.primaryContactFirstName())
                 .primaryContactLastName(request.primaryContactLastName())
                 .primaryContactEmail(request.primaryContactEmail())
                 .primaryContactPhone(request.primaryContactPhone())
-                .primaryContactTitle(request.primaryContactTitle())
-                .expectedMonthlyVolume(request.expectedMonthlyVolume())
+                .primaryContactPosition(request.primaryContactPosition())
+                .annualShippingVolume(request.annualShippingVolume())
                 .businessDescription(request.businessDescription())
-                .websiteUrl(request.websiteUrl())
-                .employeeCount(request.employeeCount())
+                .companyWebsite(request.companyWebsite())
+                .companySize(request.companySize())
                 .annualRevenue(request.annualRevenue())
                 .preferredCommunicationMethod(request.preferredCommunicationMethod())
                 .specialRequirements(request.specialRequirements())
@@ -369,7 +369,7 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
                         "Corporate onboarding application not found: " + referenceId));
         
         // Update application with negotiation details
-        application.setExpectedMonthlyVolume(request.expectedMonthlyVolume());
+        application.setExpectedMonthlyVolume(request.annualShippingVolume());
         application.setSpecialRequirements(request.specialRequirements());
         
         updateApplicationStatus(application, CorporateOnboardingStatus.CONTRACT_NEGOTIATION,
@@ -380,8 +380,8 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
         return new ContractNegotiationResponse(
                 UUID.randomUUID().toString(),
                 "INITIATED",
-                request.expectedMonthlyVolume(),
-                calculateVolumeDiscount(request.expectedMonthlyVolume()),
+                request.annualShippingVolume(),
+                calculateVolumeDiscount(request.annualShippingVolume()),
                 "Contract negotiation has been initiated. A sales representative will contact you within 2 business days.",
                 LocalDateTime.now().plusDays(2)
         );
@@ -494,9 +494,9 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
     private void updateApplicationFields(CorporateOnboardingApplication application, 
                                        UpdateCorporateOnboardingApplicationRequest request) {
         // Update business information
-        if (request.businessName() != null) application.setBusinessName(request.businessName());
-        if (request.businessEmail() != null) application.setBusinessEmail(request.businessEmail());
-        if (request.businessPhone() != null) application.setBusinessPhone(request.businessPhone());
+        if (request.companyName() != null) application.setBusinessName(request.companyName());
+        if (request.companyEmail() != null) application.setBusinessEmail(request.companyEmail());
+        if (request.companyPhone() != null) application.setBusinessPhone(request.companyPhone());
         if (request.businessAddress() != null) application.setBusinessAddress(request.businessAddress());
         if (request.billingAddress() != null) application.setBillingAddress(request.billingAddress());
         
@@ -505,13 +505,13 @@ public class CorporateOnboardingServiceImpl implements CorporateOnboardingServic
         if (request.primaryContactLastName() != null) application.setPrimaryContactLastName(request.primaryContactLastName());
         if (request.primaryContactEmail() != null) application.setPrimaryContactEmail(request.primaryContactEmail());
         if (request.primaryContactPhone() != null) application.setPrimaryContactPhone(request.primaryContactPhone());
-        if (request.primaryContactTitle() != null) application.setPrimaryContactTitle(request.primaryContactTitle());
+        if (request.primaryContactPosition() != null) application.setPrimaryContactTitle(request.primaryContactPosition());
         
         // Update business details
-        if (request.expectedMonthlyVolume() != null) application.setExpectedMonthlyVolume(request.expectedMonthlyVolume());
+        if (request.annualShippingVolume() != null) application.setExpectedMonthlyVolume(request.annualShippingVolume());
         if (request.businessDescription() != null) application.setBusinessDescription(request.businessDescription());
-        if (request.websiteUrl() != null) application.setWebsiteUrl(request.websiteUrl());
-        if (request.employeeCount() != null) application.setEmployeeCount(request.employeeCount());
+        if (request.companyWebsite() != null) application.setWebsiteUrl(request.companyWebsite());
+        if (request.companySize() != null) application.setEmployeeCount(request.companySize());
         if (request.annualRevenue() != null) application.setAnnualRevenue(request.annualRevenue());
         if (request.specialRequirements() != null) application.setSpecialRequirements(request.specialRequirements());
     }

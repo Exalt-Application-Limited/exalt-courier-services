@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Base entity for courier management domain following com.exalt standards.
+ * Base entity for courier management domain following com.gogidix.courier standards.
  */
 @Data
 @MappedSuperclass
@@ -39,7 +39,7 @@ public abstract class BaseEntity {
     
     // Helper method for UUID conversion
     public UUID getIdAsUUID() {
-        return id != null ? id instanceof String ? UUID.fromString((String)id) : (UUID)id : null;
+        return id != null ? UUID.fromString(id) : null;
     }
     // Additional shared fields for courier domain can be added here.
 }

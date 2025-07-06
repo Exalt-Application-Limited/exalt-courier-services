@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.model;
+package com.gogidix.courier.courier.drivermobileapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.assignment;
+package com.gogidix.courier.courier.drivermobileapp.dto.assignment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

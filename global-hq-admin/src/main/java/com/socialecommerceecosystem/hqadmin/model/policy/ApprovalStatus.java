@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.model.policy;
+package com.gogidix.courier.courier.hqadmin.model.policy;
 
 /**
  * Enum representing the possible approval statuses for policies.

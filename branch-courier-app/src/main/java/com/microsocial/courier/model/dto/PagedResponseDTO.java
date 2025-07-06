@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.model.dto;
+package com.gogidix.courier.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.service.dashboard;
+package com.gogidix.courier.courier.hqadmin.service.dashboard;
 
 import java.util.List;
 import java.util.Map;

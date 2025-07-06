@@ -1,9 +1,9 @@
-package com.gogidix.courier.courier.controller;
+package com.gogidix.courier.controller;
 
-import com.microsocial.courier.annotation.Traced;
-import com.microsocial.courier.model.dto.*;
-import com.microsocial.courier.service.integration.CourierManagementIntegrationService;
-import com.microsocial.courier.service.integration.OfflineSynchronizationService;
+import com.gogidix.courier.annotation.Traced;
+import com.gogidix.courier.model.dto.*;
+import com.gogidix.courier.service.integration.CourierManagementIntegrationService;
+import com.gogidix.courier.service.integration.OfflineSynchronizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

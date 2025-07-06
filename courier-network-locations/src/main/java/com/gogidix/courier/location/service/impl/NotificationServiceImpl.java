@@ -13,13 +13,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.socialecommerceecosystem.location.model.LocationStaff;
-import com.socialecommerceecosystem.location.model.PhysicalLocation;
-import com.socialecommerceecosystem.location.model.ShipmentStatus;
-import com.socialecommerceecosystem.location.model.WalkInCustomer;
-import com.socialecommerceecosystem.location.model.WalkInShipment;
-import com.socialecommerceecosystem.location.repository.LocationStaffRepository;
-import com.socialecommerceecosystem.location.repository.PhysicalLocationRepository;
+import com.gogidix.courier.location.model.LocationStaff;
+import com.gogidix.courier.location.model.PhysicalLocation;
+import com.gogidix.courier.location.model.ShipmentStatus;
+import com.gogidix.courier.location.model.WalkInCustomer;
+import com.gogidix.courier.location.model.WalkInShipment;
+import com.gogidix.courier.location.repository.LocationStaffRepository;
+import com.gogidix.courier.location.repository.PhysicalLocationRepository;
 import com.socialecommerceecosystem.location.service.NotificationService;
 
 import lombok.extern.slf4j.Slf4j;

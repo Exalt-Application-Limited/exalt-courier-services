@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.dashboard;
+package com.gogidix.courier.branch.dashboard;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.microsocial.courier.branch.dashboard.model.BranchMetricsData;
-import com.microsocial.courier.branch.dashboard.model.DeliveryMetrics;
-import com.microsocial.courier.branch.dashboard.model.PerformanceMetrics;
-import com.microsocial.courier.branch.dashboard.model.ResourceMetrics;
+import com.gogidix.courier.branch.dashboard.model.BranchMetricsData;
+import com.gogidix.courier.branch.dashboard.model.DeliveryMetrics;
+import com.gogidix.courier.branch.dashboard.model.PerformanceMetrics;
+import com.gogidix.courier.branch.dashboard.model.ResourceMetrics;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

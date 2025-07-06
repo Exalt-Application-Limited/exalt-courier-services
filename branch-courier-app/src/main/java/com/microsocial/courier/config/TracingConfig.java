@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.config;
+package com.gogidix.courier.config;
 
 import brave.baggage.BaggageField;
 import brave.baggage.CorrelationScopeConfig;

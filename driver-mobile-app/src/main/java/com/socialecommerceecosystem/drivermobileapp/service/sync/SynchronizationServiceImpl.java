@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service.sync;
+package com.gogidix.courier.courier.drivermobileapp.service.sync;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialecommerceecosystem.drivermobileapp.dto.assignment.AssignmentDTO;

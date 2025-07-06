@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.dto.routing;
+package com.gogidix.courier.courier.drivermobileapp.dto.routing;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

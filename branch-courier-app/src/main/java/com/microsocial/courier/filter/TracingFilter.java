@@ -1,6 +1,6 @@
-package com.gogidix.courier.courier.filter;
+package com.gogidix.courier.filter;
 
-import com.microsocial.courier.service.TracingService;
+import com.gogidix.courier.service.TracingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

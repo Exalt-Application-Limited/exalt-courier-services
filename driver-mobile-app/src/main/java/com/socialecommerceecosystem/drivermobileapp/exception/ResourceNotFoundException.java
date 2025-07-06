@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.exception;
+package com.gogidix.courier.courier.drivermobileapp.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

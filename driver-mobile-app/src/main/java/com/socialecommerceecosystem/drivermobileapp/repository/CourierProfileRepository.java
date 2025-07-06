@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.repository;
+package com.gogidix.courier.courier.drivermobileapp.repository;
 
 import com.socialecommerceecosystem.drivermobileapp.model.AccountStatus;
 import com.socialecommerceecosystem.drivermobileapp.model.CourierProfile;

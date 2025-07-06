@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.branch.model;
+package com.gogidix.courier.branch.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.microsocial.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.model.corporate.Branch;
 
 @Entity
 @Table(name = "courier_assignments")

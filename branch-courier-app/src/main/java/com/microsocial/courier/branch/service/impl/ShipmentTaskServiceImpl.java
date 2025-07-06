@@ -1,10 +1,10 @@
-package com.gogidix.courier.courier.branch.service.impl;
+package com.gogidix.courier.branch.service.impl;
 
-import com.microsocial.courier.branch.model.ShipmentTask;
-import com.microsocial.courier.branch.model.TaskStatus;
-import com.microsocial.courier.branch.model.TaskType;
-import com.microsocial.courier.branch.repository.ShipmentTaskRepository;
-import com.microsocial.courier.branch.service.ShipmentTaskService;
+import com.gogidix.courier.branch.model.ShipmentTask;
+import com.gogidix.courier.branch.model.TaskStatus;
+import com.gogidix.courier.branch.model.TaskType;
+import com.gogidix.courier.branch.repository.ShipmentTaskRepository;
+import com.gogidix.courier.branch.service.ShipmentTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

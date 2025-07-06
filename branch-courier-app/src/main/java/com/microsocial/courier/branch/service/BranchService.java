@@ -1,6 +1,6 @@
-package com.gogidix.courier.courier.branch.service;
+package com.gogidix.courier.branch.service;
 
-import com.microsocial.courier.branch.model.corporate.Branch;
+import com.gogidix.courier.branch.model.corporate.Branch;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.exalt.courier.hqadmin.dto.policy;
+package com.gogidix.courier.courier.hqadmin.dto.policy;
 
 import com.socialecommerceecosystem.hqadmin.model.policy.PolicyType;
 import lombok.AllArgsConstructor;

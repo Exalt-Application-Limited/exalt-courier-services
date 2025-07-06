@@ -1,4 +1,4 @@
-package com.exalt.courier.drivermobileapp.service.impl;
+package com.gogidix.courier.courier.drivermobileapp.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialecommerceecosystem.drivermobileapp.client.CourierManagementClient;

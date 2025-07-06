@@ -1,5 +1,5 @@
 import java.util.Map;
-package com.exalt.courier.tracking.api;
+package com.gogidix.courier.courier.tracking.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.socialecommerceecosystem.tracking.model.Shipment;

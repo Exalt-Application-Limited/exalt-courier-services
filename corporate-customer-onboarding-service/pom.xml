@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
-	<groupId>com.exalt</groupId>
+	<groupId>com.gogidix.courier</groupId>
 	<artifactId>corporate-customer-onboarding-service</artifactId>
 	<version>1.0.0</version>
 	<name>corporate-customer-onboarding-service</name>
@@ -92,44 +92,47 @@
 		
 		<!-- Shared Libraries -->
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-model</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-security</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
+		<!-- shared-validation temporarily disabled due to build issues -->
+		<!--
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-validation</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
+		-->
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-exceptions</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-utilities</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-audit</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-messaging</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gogidix.ecosystem.shared</groupId>
+			<groupId>com.gogidix.ecosystem</groupId>
 			<artifactId>shared-testing</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 

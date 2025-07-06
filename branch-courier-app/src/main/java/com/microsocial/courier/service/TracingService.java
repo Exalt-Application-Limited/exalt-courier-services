@@ -1,4 +1,4 @@
-package com.gogidix.courier.courier.service;
+package com.gogidix.courier.service;
 
 import brave.Span;
 import brave.Tracer;

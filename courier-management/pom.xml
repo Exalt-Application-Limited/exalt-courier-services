@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<!-- STANDARDIZED: Using Spring Boot parent with com.exalt groupId -->
+	<!-- STANDARDIZED: Using Spring Boot parent with com.gogidix.courier groupId -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -11,7 +11,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
-	<groupId>com.exalt</groupId>
+	<groupId>com.gogidix.courier</groupId>
 	
 	<artifactId>courier-management</artifactId>
 	<version>1.0.0</version>

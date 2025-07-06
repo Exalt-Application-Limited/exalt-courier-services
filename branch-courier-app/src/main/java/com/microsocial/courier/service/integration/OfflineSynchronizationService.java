@@ -1,11 +1,11 @@
-package com.gogidix.courier.courier.service.integration;
+package com.gogidix.courier.service.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsocial.courier.annotation.Traced;
-import com.microsocial.courier.model.dto.AssignmentDTO;
-import com.microsocial.courier.model.dto.AssignmentTaskDTO;
-import com.microsocial.courier.model.dto.CourierDTO;
-import com.microsocial.courier.service.TracingService;
+import com.gogidix.courier.annotation.Traced;
+import com.gogidix.courier.model.dto.AssignmentDTO;
+import com.gogidix.courier.model.dto.AssignmentTaskDTO;
+import com.gogidix.courier.model.dto.CourierDTO;
+import com.gogidix.courier.service.TracingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

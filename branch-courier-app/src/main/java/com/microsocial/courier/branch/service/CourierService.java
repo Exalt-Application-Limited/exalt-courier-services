@@ -1,7 +1,7 @@
-package com.gogidix.courier.courier.branch.service;
+package com.gogidix.courier.branch.service;
 
-import com.microsocial.courier.branch.model.Courier;
-import com.microsocial.courier.branch.model.CourierStatus;
+import com.gogidix.courier.branch.model.Courier;
+import com.gogidix.courier.branch.model.CourierStatus;
 
 import java.util.List;
 import java.util.Optional;
