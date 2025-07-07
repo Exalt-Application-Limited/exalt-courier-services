@@ -1,9 +1,0 @@
-# Regional Admin Dashboard - Robots.txt
-# This is a private admin application
-
-User-agent: *
-Disallow: /
-
-# Security headers
-# This admin interface should not be indexed by search engines
-# Access is restricted to authorized personnel only
